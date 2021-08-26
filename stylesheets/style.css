@@ -1,15 +1,15 @@
 @font-face {
-  font-family: "Montserrat";
-  src: url("fonts/montserrat/Montserrat-Regular.ttf") format("tff");
+  font-family: "Poppins";
+  src: url("fonts/Poppins-Regular.ttf") format("tff");
 }
 
 @font-face {
-  font-family: "Century Gothic";
-  src: url("fonts/centurygothic/GOTHICB.TTF") format("tff");
+  font-family: "OpenSans";
+  src: url("fonts/OpenSans-Regular.ttf") format("tff");
 }
 
 :root {
-  --ekko-blue: #334252;
+  --fjord-blue: #00A1E6; /* Leena changed this - please update */
   --ekko-teal: #00bdaa;
   --ekko-teal-light: rgba(0, 189, 170, 0.2);
   --ekko-pink: #ff895d;
@@ -33,7 +33,7 @@
 html,
 body {
   box-sizing: border-box;
-  font-family: Montserrat, system-ui, -apple-system, "Segoe UI", Roboto,
+  font-family: OpenSans, system-ui, -apple-system, "Segoe UI", Roboto,
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   height: 100%;
   background-color: #001633; /* sophie changes */
@@ -51,7 +51,7 @@ body {
 }
 
 .bg-blue {
-  background-color: var(--ekko-blue);
+  background-color: var(--fjord-blue);
 }
 
 .bg-teal {
@@ -227,7 +227,7 @@ body {
 }
 
 #toc a:hover {
-  color: var(--ekko-blue);
+  color: var(--fjord-blue);
 }
 
 #toc .selected a {
@@ -491,7 +491,7 @@ body {
 }
 
 #presentation h2 {
-  color: var(--ekko-blue);
+  color: var(--fjord-blue);
   font-weight: 800;
   font-size: 2.25rem;
   margin-bottom: 1em;
