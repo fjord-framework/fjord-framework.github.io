@@ -150,25 +150,25 @@
     background-image: url("../assets/logo/fjord-logo.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: 25%;
-    background-position: calc(50% / 3) calc(50% + 2rem);
+    background-size: 30%;
+    background-position: calc(50% / 4) calc(50% + 2rem);
   }
 
   #start-here div.static-logo-teal-light {
-    background-image: url("../assets/logo/fjord-light-blue.png");
+    background-image: url("../assets/logo/fjord-blue.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: 25%;
-    background-position: calc(50% / 3) calc(50% + 2rem);
+    background-size: 30%;
+    background-position: calc(50% / 4) calc(50% + 2rem);
     display: flex;
   }
 
   #start-here div.static-logo-pink-light {
-    background-image: url("../assets/logo/fjord-light-blue.png");
+    background-image: url("../assets/logo/fjord-mono-white.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: 25%;
-    background-position: calc(50% / 3) calc(50% + 2rem);
+    background-size: 30%;
+    background-position: calc(50% / 4) calc(50% + 2rem);
     display: flex;
   }
 
