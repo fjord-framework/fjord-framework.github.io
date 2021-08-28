@@ -149,7 +149,7 @@
             Fjord abstracts away the complexity of working with the AWS cloud
             infrastructure by automating the deployment process.
           </p>
-          <img class="lazy" data-src="assets/images/evolution 6.png"/>
+          <img class="lazy" data-src="assets/media/case-study/gifs/full_flow.gif"/>
         </div>
       </div>
 
@@ -538,23 +538,6 @@
       <div id="case-study-content">
         <div class="prose">
 
-          <!-- Template for Image + BlockQuote -->
-        <img
-          class="lazy"
-          data-src="assets/NAME.extension"
-        />
-
-        <blockquote>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text 
-          ever since the 1500s, when an unknown printer took a galley of type 
-          and scrambled it to make a type specimen book. 
-        </blockquote>
-
-        <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting.
-        </p>
-        <!--  -->
 
          
           <h1>Case Study</h1>
@@ -562,114 +545,745 @@
           <!-- Section 1 -->
           <h2 id="section-1">1. What is Fjord?</h2>
 
-
+          <p>
+            Fjord is an open-source framework that enables client-side streaming from Kafka in real-time.
+          </p>
+          <p>
+            Through Fjord’s CLI, developers can easily and quickly deploy dozens of components on Amazon Web Services (AWS) 
+            to offload the streaming responsibilities to Fjord’s scalable real-time API proxy infrastructure. 
+          </p>
+          <p>
+            This enables any number of authorized end users--whether on a browser or a mobile app--to receive data streams 
+            from any number of Kafka topics from any number of Kafka clusters.          
+            <figure>
+              <img src="assets/media/case-study/images/kafka real-time fjord.png" class="case-study-image" />
+              <figcaption>Real-time API Proxy for Kafka</figcaption>
+            </figure>
+          </p>
+          <p>
+            In this case study, we outline the key challenges we faced as we worked with real-time APIs, event driven architectures, 
+            and Kafka as an event streaming platform. 
+          <p>
+            We also explain the various AWS components of the Fjord distributed system, and how we built the Fjord CLI to be a layer 
+            on top of the AWS Cloud Development Kit (CDK) to make the deployment process as simple and user-friendly as possible.
+          </p>
+          <p>
+            Along the way, we’ll discuss the engineering choices we made, the architectural tradeoffs, and the evolution of how Fjord came to be.
+          </p>
+          <p>
+            Let’s start by providing some context and going through the problems that Fjord solves, from the perspective of a hypothetical company.
+          </p>
           <!-- Section 2 -->
-          <h2 id="section-2">2. Use Case & SuperEats example</h2>
+          <h2 id="section-2" class="h2">2. Use Case & SuperEats example</h2>
           <h3 id="section-2-1">2.1 Who Might Use Ford?</h3>
+          <p>
+            Any company or organization that uses Kafka may need to expose one or more Kafka topics to a client interface, whether because this is 
+            a central or tangential aspect of their business, or even just as an additional layer of human observability into a particular data stream.
+          </p>
+          <p>
+            As we’ll explore in further sections of this case study, Kafka is a powerful event streaming platform designed to facilitate 
+            communication between multiple backend components of an organization’s distributed system. 
+          </p>
+          <p>
+            However, for reasons we’ll also discuss later, building, hosting, and managing the infrastructure necessary to handle client-side 
+            streaming from Kafka can be challenging, time consuming, and the kind of undifferentiated heavy lifting that is best outsourced to a third party.
+          </p>
+          <p>We see our target user as a company (or organization) that:</p>
+          <ol>
+            <li>Is large enough to already use Kafka for some aspect of their infrastructure, and</li>
+            <li>Wants to expose some stream of data (i.e. from a Kafka topic) in real-time to their employees, customers, suppliers, or any other 
+              type of stakeholder, including the public at large--or any combination of these.</li>
+          </ol>
+          <p>
+            Of course, this organization is cost-conscious and wants the most efficient and easy way to deploy the infrastructure needed to solve 
+            this problem, while still managing, owning, and closely handling all the data themselves.
+          </p>
           <h3 id="section-2-2">2.2 SuperEats Example</h3>
-          
-
+          <p>
+            Let’s imagine that you run a company called SuperEats. Your company provides a platform that enables customers to order a meal 
+            from any registered restaurant, and independent contractors to pick up the order from that restaurant, and drive the meal to the customer.
+          </p>
+          <figure>
+            <img src="assets/media/case-study/gifs/Events.gif" class="case-study-image" />
+            <figcaption>Real-time Updates</figcaption>
+          </figure>
+          <p>SuperEats works with thousands of restaurants, from well-known multinational chains like Chipotle to small hole-in-the-wall shops 
+            like Cousin Vinny’s Hot Dogs. Customers place an order from their favorite restaurant, which then comes into SuperEats’ Kafka cluster.</p>
+          <p>
+            You want your platform to then not only send orders out to drivers, but also for customers to receive real-time updates at every 
+            step of the way. For example, customers should know when their meal was made, when the driver has picked it up, when the driver is 
+            about five minutes away from their home, and finally when their meal is at their doorstep.
+          </p>
+          <p>
+            To accomplish this, SuperEats needs a real-time infrastructure that is secure, easy to deploy and use, and takes advantage of their 
+            existing infrastructure.
+          </p>
           <!-- Section 3 -->
-          <h2 id="section-3">3. What is Real-time?</h2>
+          <h2 id="section-3" class="h2">3. What is Real-time?</h2>
           <h3 id="section-3-1">3.1 Defining Real-time</h3>
+          <p>
+            There are three main types of real-time, in descending order of strictness: hard, firm, and soft.
+          </p>
+          <p>
+            Hard real-time means that there is a very short window within which to respond to a triggering event. An example of this is an 
+            aircraft control system that needs to respond within microseconds of some detected event, or the plane crashes. There are extremely 
+            harsh penalties for missing a deadline by even a thousandth of a second.
+          </p>
+          <p>
+            Firm real-time is a little more loose, but still means a narrow timeframe that is typically under a second. In financial software, 
+            for example, receiving an updated stock quote price even a half-second before others could mean the difference between financial success and ruin.
+          </p>
+          <p>
+            Finally, soft real-time (or “near real-time”) is the most lenient, and is used in situations like web applications, where a relatively 
+            higher latency is not necessarily a deal breaker. An example here could be a collaborative text editing software like Google Docs, 
+            or a chat application.
+          </p>
+          <p>
+            With soft real-time, the user does not have to refresh the page or otherwise do anything to receive new data. Data just continuously 
+            flows to the user, with a mostly unnoticeable delay.
+          </p>
+          <p>
+            This “soft” use of the term, which deals more with the user perceiving something as happening in real-time, is how we use the term for 
+            both Fjord and the SuperEats example.
+          </p>
+          <p> Ably, a leader in the real-time space, defines real-time thus:
+          </p>
+          <figure>
+            <blockquote>
+              <p>“Real-time is the ability to react to anything that occurs as it occurs, before it loses its importance.”</p>
+            </blockquote>
+            <figcaption>-Ably<cite> Real-Time Definition</cite></figcaption>
+          </figure>
+          <p>
+            This definition further illustrates the main idea here: within the context of web applications, the goal of real-time streaming is 
+            to allow the recipient to get the information they need within sufficient time to adequately respond to it.
+          </p>
+          <p>
+            SuperEats customers may expect updates on their meal order as soon as they become available, and before the updates lose their relevance. 
+            For example, it would not be meaningful to receive an update that a driver is on their way if the driver is actually already at your door.
+          </p>
           <h3 id="section-3-2">3.2 Real-time Techniques</h3>
-            <h4>3.2.1  Long polling</h4>
-            <h4>3.2.2 Server Sent Events (SSE)</h4>
-            <h4>3.2.3 WebSockets</h4>
+          <p>
+            There are different techniques developers could use to deliver real-time updates over the web.
+          </p>
+          <h4>3.2.1  Long polling</h4>
+          <p>
+            With long polling, the client sends an initial HTTP request to the server, and the server then waits until there’s a new piece of data 
+            to send back. Once the server gets a new update, it sends a response and immediately closes the request. The client must then send yet a 
+            new request to receive another update from the server.
+          </p>
+          <figure>
+            <img src="assets/media/case-study/gifs/polling.gif" class="case-study-image" />
+            <figcaption>Long-Polling</figcaption>
+          </figure>
+          <p>
+            This is great in situations when the rate of new message production is not high. For example, the current outdoor temperature usually 
+            doesn't significantly change every quarter or even hour.
+          </p>
+          <p>
+            There are downsides to using long polling. Having the client send a new request and the server send a new response for every single new 
+            message not only adds more latency to the process, but also puts more work on both the client and the server.
+          </p>
+          <p>
+            Because we should always assume an unreliable network, long polling also means that we may not know if our request went through correctly 
+            the first time and the server just does not have anything to send, or if the request got lost or somehow timed out. If the latter, we may 
+            need to add some kind of logic to handle resubmission.
+          </p>
+          <p>
+            Despite all of this, it’s conceivable that using long polling could still satisfy certain situations where a Kafka topic is not particularly 
+            prolific. But because we wanted the Fjord framework to also accommodate streams on the magnitude of a hundred records per second, this was 
+            not the best option.
+          </p>
+          </p>
+          <h4>3.2.2 Server Sent Events (SSE)</h4>
+          <p>
+            SSE (also known as EventSource) is a web API that enables a client to receive a continuous stream of data from a server.
+          </p>
+          <p>
+            The client sends an HTTP request through the EventSource WebAPI, which lets the server know this request is for a stream of data. 
+            The server then returns a never-ending HTTP response whose headers indicate that the connection will be ongoing until explicitly closed. 
+            At the same time, the server starts to send any data received, all in the same HTTP response.
+          </p>
+          <figure>
+            <img src="assets/media/case-study/gifs/sse.gif" class="case-study-image" />
+            <figcaption>Server-Sent Events</figcaption>
+          </figure>
+          <p>
+            Just like long polling, SSE is unidirectional. The data is only streaming from the server to the client, and not vice versa.
+          </p>
+          <p>
+            However, the SSE approach is much more efficient than long polling, as there’s no longer the need to continuously open and close HTTP 
+            responses for every message. All data is being transmitted through one never ending HTTP response.
+          </p>
+          <p>
+            SSE is therefore ideal for situations where the client is not regularly sending information to the server, but is instead receiving a 
+            constant stream from the server.
+          </p>
+          <h4>3.2.3 WebSockets</h4>
+          <p>
+            WebSockets is a protocol that allows a client and a server to repeatedly exchange data through a single TCP connection. This bidirectional 
+            protocol means that both the client and the server can send data to each other as long as the WebSocket connection remains open.
+          </p>
+          <figure>
+            <img src="assets/media/case-study/gifs/ws.gif" class="case-study-image" />
+            <figcaption>WebSockets</figcaption>
+          </figure>
+          <p>
+            The client first sends a normal HTTP request, but this request contains headers that ask the connection to be upgraded to a WebSocket 
+            connection. The server then sends a response that opens the bidirectional communication line over the WebSockets protocol.
+          </p>
+          <p>
+            WebSockets are great in situations where both the server and the client need to frequently send data to each other, such as in online 
+            gaming and chat room applications. WebSockets are also seen as the de facto technology for real-time communication, which means that 
+            there’s a large community available for support, and many open source libraries available.
+          </p>
           <h3 id="section-3-3">3.3 Choosing a Real-time API</h3>
-            <h4>3.3.1 Unidirectional v.s. Bidirectional</h4>
-            <h4>3.3.2 Auto-reconnect</h4>
-            <h4>3.3.3 Native Infrastructure Compatibility</h4>
-
-
+          <h4>3.3.1 Unidirectional v.s. Bidirectional</h4>
+          <p>
+            SSE’s unidirectional limitation was not an impediment in our use case. Our goal was always to stream content from Kafka to end users,
+             and not vice versa. For a company like SuperEats, having all customers and drivers be able to send a stream of data back to the company’s Kafka cluster may actually open up a new set of challenges that would require additional security and maintenance. That was an additional challenge not warranted by our use case.
+          </p>
+          <p>
+            It’s true that we could have still used WebSockets and just chosen to not implement any client-side push back to Kafka. But that would 
+            defeat the main purpose of using WebSockets in the first place.
+          </p>
+          <p>
+            There are also two useful SSE features absent with WebSockets that tipped the scale in favor of using SSE for Fjord: auto-reconnect, and 
+            native infrastructure compatibility.
+          </p>
+          <h4>3.3.2 Auto-reconnect</h4>
+          <p>
+            By default, SSE’s EventSource WebAPI automatically tries to reconnect the client to the server every time the client gets disconnected 
+            from the server. Because our use case involved streaming to drivers on mobile devices that may need to switch cell phone towers when 
+            driving across town, this seemed like a useful feature.
+          </p>
+          <p>
+            The auto-reconnect feature also proved useful for auto-scaling purposes. Because, as we’ll explore later, the URL that clients are
+             connected to is actually that of a load balancer, this meant that whenever a server has either crashed or needs to be shut down because 
+             of low activity, all of the clients currently receiving data from that server would automatically be reconnected to another existing server. 
+             There was no need for us to configure any additional logic to handle that.
+          </p>
+          <p>
+            The auto-reconnect feature worked in perfect tandem with the load balancer to persist client-server connections.
+          </p>
+          <h4>3.3.3 Native Infrastructure Compatibility</h4>
+          <p>
+            Lastly, the main advantage of SSE has to do with the fact that it works over the standard HTTP protocol and not a more specialized 
+            protocol like WebSockets. This means that SSE works right out of the box with all your infrastructure components like load balancers, 
+            proxies, etc.
+          </p>
+          <p>
+            Configuring your infrastructure to work with WebSockets is of course possible, but it would require using additional libraries and 
+            spending more time around configurations.
+          </p>
+          <figure>
+            <img src="assets/media/case-study/images/WS vs SSE Dark.svg" class="case-study-image" />
+            <figcaption>WebSockets vs SSE</figcaption>
+          </figure>
+          <p>
+            For all these reasons, we used SSE to stream records from our server to clients. Next, let’s understand why we decided to specifically 
+            build an API proxy for Kafka.
+          </p>
           <!-- Section 4 -->
-          <h2 id="section-4">4. What is Kafka?</h2>
+          <h2 id="section-4" class="h2">4. What is Kafka?</h2>
+          <p>
+            In this section, we will explore Kafka. More specifically, we’ll appreciate why Kafka often serves as the backbone of an organization’s 
+            infrastructure, and is also a great conveyor of real-time data.
+          </p>
+          <p>
+            We will begin by understanding the evolution of typical application architectures that led to Kafka, starting from monoliths to microservices,
+             then event-driven architectures (EDA), and finally how event streaming (and Kafka) differ from traditional EDAs.
+          </p>
+          <p>
+            We’ll then tackle why many companies are using Kafka, and why a company like SuperEats might also use Kafka. Finally, we’ll appreciate 
+            why it makes a lot of sense to use Kafka for real-time streaming.
+          </p>
           <h3 id="section-4-1">4.1 The evolution that led to Kafka</h3>
-            <h4>4.1.1 From Monoliths to Microservices</h4>
-            <h4>4.1.2 The Microservices Death Star</h4>
-            <h4>4.1.3 EDA as Messaging Pattern for Microservices</h4>
-            <h4>4.1.4 Limitations of Traditional EDAs</h4>
-            <h4>4.1.5 Event Streaming</h4>
+          <h4>4.1.1 From Monoliths to Microservices</h4>
+          <p>
+            Applications typically begin as monoliths, with all business logic tightly coupled in the same codebase. As the application becomes 
+            more popular and more complex, however, scalability becomes an issue, as larger and larger monoliths become increasingly harder to update, 
+            duplicate on multiple servers, and maintain.
+          </p>
+          <p>
+            A common response to this growth is to split up the monolith into separate services, all handling a core piece of logic, and each possibly 
+            having access to its own database. This results in what is known as the microservices architecture.
+          </p>
+          <p>
+            Within microservices, inter-service communication takes place through a chosen protocol, like HTTP or gRPC. Services need to be aware of 
+            where others are located in order to initiate a communication channel between them.
+          </p>
+          <p>
+            When a customer buys a product online, for example, this might trigger the inventory service, which then sends a message to the billings 
+            services, which finally sends a message to the shipping service.
+          </p>
+          <p>
+            Every subsequent service may rely on data from other services, in a particular order. If one service goes down, subsequent services 
+            may be affected and unable to complete their work. This may require adding a queue in between each pair of microservices so that messages are never lost.
+          </p>
+          <h4>4.1.2 The Microservices Death Star</h4>
+          <p>
+            While this pattern above can work when you have just a few services, things get more challenging as more and more services get spun up. 
+            With each added service, the number of potential pair permutations grows faster than linearly. To make matters worse, each microservice may 
+            itself have multiple instances, all of which need to communicate with all the instances of the paired microservice.
+          </p>
+          <figure>
+            <img src="assets/media/case-study/gifs/microservices.gif" class="case-study-image" />
+            <figcaption>Microservices Death Star</figcaption>
+          </figure>
+          <p>
+            This can quickly get out of hand, leading to what is known as the microservices death star.
+          </p>
+          <p>
+            A common solution is to adopt an event driven architecture (EDA).
+          </p>
+          <h4>4.1.3 EDA as Messaging Pattern for Microservices</h4>
+          <p>
+            An event driven architecture (EDA) offers a paradigm that decouples the production and consumption of messages (or events) in order to 
+            facilitate inter-microservices communication.
+          </p>
+          <figure>
+            <img src="assets/media/case-study/gifs/producer_consumer.gif" class="case-study-image" />
+            <figcaption>Event-Driven Architecture</figcaption>
+          </figure>
+          <p>
+            By adding a broker in between the microservices that generate events (“producers”) and the microservices that receive events (“consumers”), 
+            an EDA allows microservices to communicate with each other without even being aware of each other’s existence.
+          </p>
+          <p>
+            The three main architectural pieces of EDAs therefore include:
+          </p>
+          <ol>
+            <li>Producers that generate and send events to a broker,
+            </li>
+            <li>The routing of events through a broker that acts as a middleware, and
+            </li>
+            <li>Consumers that have access to any data they need from the broker.
+            </li>
+          </ol>
+          <p>
+            At the core of EDAs are events. An event is any significant occurrence or change in state for a distributed system. An event contains 
+            both a payload describing the systemic change or action that occurred, as well as a timestamp of when it occurred.
+          </p>
+          <p>
+            All producers create and send events to the same broker, and then move on with their own business logic process, completely unaware of
+             what happens to the event afterward.
+          </p>
+          <p>
+            All consumers that are interested in this particular event can then read it from the broker. Events are immutable (i.e. they cannot be 
+            edited), but they may expire or be deleted.
+          </p>
+          <h4>4.1.4 Limitations of Traditional EDAs</h4>
+          <p>
+            Traditional EDAs have pushed the envelope very far already, significantly simplifying both the actual lines of communication between all 
+            microservice instances, and the mental abstractions needed to understand what is happening under the hood.
+          </p>
+          <p>
+            However, as tends to be the case, every solution opens up a new set of challenges--and traditional EDAs are no different in that sense.
+          </p>
+          <p>In the traditional EDA model, the broker wears many hats. It has to:
+          </p>
+          <ol>
+            <li>Push events to each appropriate consumer interested in that event,
+            </li>
+            <li>Keep track of which event was last consumed by each consumer (the “offset” or index), and this for all consumers, and
+            </li>
+            <li>Delete each event as soon as it is read by the appropriate consumer.
+            </li>
+          </ol>
+          <p>The broker’s workload therefore grows in proportion to the number of consumers and events it must service.
+          </p>
+          <p>While brokers in the traditional EDA model can already handle high flows of records to high numbers of consumers, there could 
+            come a point beyond which the broker starts to receive events at a faster rate than it is able to send them out to all consumers.
+          </p>
+          <p>This can be either because the broker is receiving too many events, or there are too many consumers to manage and to service--or a 
+            combination of both. This is very similar to a flooding situation. Water is coming in at a faster rate than the normal dissipation 
+            channels can adequately process, thereby overwhelming the system.
+          </p>
+          <h4>4.1.5 Event Streaming</h4>
+          <p>
+            To handle this extremely high flow of events, event streaming platforms were born. They are still considered a subset of EDAs because 
+            they have the same three components of producers, consumers, and a middleware broker. However, they are designed to handle a higher 
+            velocity of events than traditional EDAs.
+          </p>
+          <p>
+            The main paradigm shift and key differentiating factor behind event streaming platforms is that the broker actually does less work than 
+            it does in the traditional EDA model.
+          </p>
+          <p>
+            Instead of the broker pushing events to all consumers, each consumer is responsible for pulling each record from the broker. The broker 
+            similarly does not have to worry about keeping track of the offset of each consumer, since each consumer handles their own offset themselves.
+          </p>
+          <p>
+            Finally, the broker does not have to delete events. While traditional EDA technologies use a queue-based structure, where events 
+            are deleted after they’re consumed, event streaming platforms use a log-based structure to durably store events. With event streaming, 
+            newly added consumers can not only pick up newly received events, but they can also start to stream records from the very beginning of 
+            the log’s creation. This is, of course, only possible because events are not deleted after they are read.
+          </p>
+          <p>
+            In order to ensure a scalable event streaming platform, where we place more business logic becomes significant. With traditional EDA 
+            technologies, the broker holds the bulk of the integration logic. Consumers just receive whatever is sent to them by the broker. 
+            This sets up the “Smart Broker, Dumb Consumer” approach.
+          </p>
+          <p>
+            In contrast, event streaming platforms opt for the “Dumb Broker, Smart Consumer” approach, placing more integration logic on each 
+            consumer instead. This enables a high volume and velocity of events, because there’s a significantly lower relationship between the
+             number of events and consumers on the one hand, and the amount of work the broker needs to do on the other.
+          </p>
+          <p>
+            In other words, increasing either the pace of events that are entering the system, or the number of consumers reading from the 
+            broker, has a much less noticeable impact on the additional work the broker needs to do.
+          </p>
+          <figure>
+            <img src="assets/media/case-study/gifs/kafka.gif" class="case-study-image" />
+            <figcaption>Event Streaming</figcaption>
+          </figure>
+          <p>
+            This finally leads us to our next point, the gold standard in event-streaming platforms: Apache Kafka.
+          </p>
           <h3 id="section-4-2">4.2 The rise of Apache Kafka</h3>
+          <p>
+            If data is the lifeblood of an organization, then Apache Kafka is like the organization’s circulatory system. Kafka offers a 
+            powerful, scalable, efficient, and redundant infrastructure that allows your distributed services to communicate with each other in real-time.
+          </p>
+          <p>
+            The technology was created at LinkedIn out of a need to track vast numbers of site events like page views and user actions, as 
+            well as to aggregate large quantities of logs from disparate sources within its distributed architecture. It later became an 
+            open source project of the Apache Foundation in 2011.
+          </p>
+          <p>
+            Kafka was designed to be used to manage machine to machine communication. Kafka’s custom binary protocol over TCP is built to
+             take advantage of advanced TCP features (e.g., the ability to multiplex requests and the ability to simultaneously poll any 
+             connections). Kafka is optimized to handle extremely high throughput of messages. Back in 2019, LinkedIn was already processing 
+             7 trillion messages per day on their Kafka clusters.[6] This is probably much higher today.
+          </p>
+          <p>
+            Today, over 80% of all Fortune 100 companies use Kafka.
+          </p>
           <h3 id="section-4-3">4.3 Kafka and Real-time</h3>
-
-
+          <p>
+            A company like SuperEats can use Kafka to set up an infrastructure that can scale as the business grows, without worrying 
+            about performance issues down the line.
+          </p>
+          <p>
+            Kafka’s high throughput capacity makes it an ideal candidate to serve real-time events to end users. In the next section, 
+            we’ll dive deeper into why you need an API proxy if you want to allow clients to stream from a Kafka cluster.
+          </p>
           <!-- Section 5 -->
-          <h2 id="section-5">5. Why need an API Proxy for Kafka?</h2>
+          <h2 id="section-5" class="h2">5. Why need an API Proxy for Kafka?</h2>
           <h3 id="section-5-1">5.1 Protocol Interoperability Issue</h3>
+          <p>
+            Kafka is a robust event streaming platform great for handling high volumes of events flowing between a relatively manageable
+             number of producers and consumers. It uses a proprietary binary protocol designed to facilitate machine to machine communication.
+          </p>
+          <p>
+            However, internet facing end users use their mobile phones, laptops, tablets and desktops and use the HTTP/S protocol. 
+            As we saw earlier, the choice here is to leverage SSE and receive a continuous stream of data without any additional 
+            effort from the end user. There is a clear mismatch between Kafka and the end-user's protocol of consuming streams of data.
+          </p>
           <h3 id="section-5-2">5.2 Using an API Proxy as Middleware</h3>
+          <p>
+            An API proxy can be designed to tackle the challenges of moving Kafka data online for public consumption. An API proxy is
+             generally a server that sits between your web application and a backend service. Developers can build web applications
+              using the set of API endpoints without knowing anything about the back-end.
+          </p>
+          <p>
+            With an API proxy, end-users can send HTTP requests to the API proxy. The API proxy would  sit between Kafka and the internet-facing
+             end-users and translate the traffic between the two protocols.
+          </p>
           <h3 id="section-5-3">5.3 Additional Benefits of an API Proxy</h3>
-            <h4>5.3.1 Security Layer</h4>
-            <h4>5.3.2 Outsourcing the Fanout mechanism</h4>
-
-
+          <p>
+            Not only does the API Proxy make client-side streaming from Kafka possible, but it also provides some additional benefits.
+          </p>
+          <h4>5.3.1 Security Layer</h4>
+          <p>
+            When consumers are internal to the system, security isn’t usually a concern since it is a controlled environment. However, 
+            when consumers are external to the system and are connected via the internet, there needs to be additional security in place 
+            to closely monitor for malicious access to the internal system.
+          </p>
+          <p>
+            Using a proxy serves as this additional layer of security.
+          </p>
+          <h4>5.3.2 Outsourcing the Fanout mechanism</h4>
+          <p>
+            Handling thousands or millions of internet users is a resource intensive endeavour. Making each client an independent Kafka
+             consumer is possible, but it would be highly inadvisable for not only obvious security reasons, but also for the unnecessary 
+             load it would add to your Kafka cluster.
+          </p>
+          <p>
+            Using a proxy enables the web messaging tasks to be offloaded to another messaging layer entirely. This offers a more reliable 
+            and scalable solution.
+          </p>
+          <p>
+            Positioning an API proxy between Kafka and end users would allow this middleware to receive Kafka records using Kafka’s 
+            binary protocol, and then push that data to all connected devices in real-time via SSE, which is delivered over the HTTP protocol.
+          </p>
+          <p>
+            What are some existing solutions for this API proxy? Let’s look at that next.
+          </p>
           <!-- Section 6 -->
-
-          <h2 id="section-6">6. Why We Built Ekko</h2>
+          <h2 id="section-6" class="h2">6. Existing Solutions</h2>
           <h3 id="section-6-1">6.1 Paid Solutions</h3>
+          <p>
+            If SuperEats wanted to use an existing, paid solution, what options would there be?
+          </p>
+          <p>
+            Ably, PubNub and MigratoryData offer specialized services for Kafka. All of these companies offer feature-rich, 
+            highly scalable solutions. The main downside of these services is that you pay a high price for the convenience 
+            and ease of use, and you’re locked into their ecosystems.
+          </p>
           <h3 id="section-6-2">6.2 DIY Approach</h3>
+          <p>
+            If you wish to go the Do-It-Yourself (DIY) route, you will find many open-source platforms and services to help you 
+            accomplish this goal. The downside to this approach is the time, energy and expertise it requires to connect everything 
+            together. Installing and connecting all the different components is a challenge in itself, not to mention deploying and 
+            maintaining this infrastructure.
+          </p>
+          <p>
+            If you want to add scalability into the mix, you have to understand how these components handle load and how to 
+            effectively tweak them to meet your use case. This is not always a realistic approach for small to medium sized companies.
+          </p>
           <h3 id="section-6-3">6.3 Fjord: the only open source, full-service solution</h3>
-         
-
+          <p>Fjord positions itself in between the paid services and the DIY approach.
+          </p>
+          <p>
+            Fjord is a real-time API Proxy for Kafka. 
+          </p>
+          <ul>
+            <li>It is open-source, scalable, and simple to deploy to AWS.
+            </li>
+            <li>Fjord lets you have full and exclusive ownership of the data coming in and out of your Kafka clusters.
+            </li>
+            <li>We offer a minimal feature set and a simple developer experience so that you can easily add any additional features you want.
+            </li>
+          </ul>
+          <p>As far as we know, Fjord is the only open-source platform that incorporates all the infrastructure pieces you need to
+             deploy an API proxy for Kafka right out of the box.
+          </p>
           <!-- Section 7 -->
-
-          <h2 id="section-7">7. Building Fjord</h2>
+          <h2 id="section-7" class="h2">7. Building Fjord</h2>
           <h3 id="section-7-1">7.1 Architectural Overview through SuperEats Example</h3>
-          <h3 id="section-7-2">7.2 Design Goals</h3>        
+          <h3 id="section-7-2">7.2 Design Goals</h3>
           <h3 id="section-7-3">7.3 First Steps</h3>
-            <h4>7.3.1 Simulating the SuperEats Kafka Cluster Locally</h4>
-            <h4>7.3.2 Moving the SuperEats Kafka Cluster to a VPS</h4>
-            <h4>7.3.3 Securing the SuperEats Kafka Cluster</h4>
-            <h4>7.3.4 Expanding the SuperEats Kafka Cluster</h4>
+          <h4>7.3.1 Simulating the SuperEats Kafka Cluster Locally</h4>
+          <h4>7.3.2 Moving the SuperEats Kafka Cluster to a VPS</h4>
+          <h4>7.3.3 Securing the SuperEats Kafka Cluster</h4>
+          <h4>7.3.4 Expanding the SuperEats Kafka Cluster</h4>
           <h3 id="section-7-4">7.4 Goal 1: Open Kafka streams to the internet</h3>
-            <h4>7.4.1 Building a Single Consumer</h4>
-            <h4>7.4.2 Building the Fjord Server</h4>
+          <h4>7.4.1 Building a Single Consumer</h4>
+          <h4>7.4.2 Building the Fjord Server</h4>
           <h3 id="section-7-5">7.5 Goal 2: Create a scalable PaaS infrastructure</h3>
-            <h4>7.5.1 Decoupling the Consumer and Server</h4>
-            <h4>7.5.2 SNS or Redis</h4>
-            <h4>7.5.3 Dockerizing Fjord Components</h4>
-            <h4>7.5.4 Docker</h4>
-            <h4>7.5.5 Managing Containers</h4>
-            <h4>7.5.6 On AWS with ECS</h4>
-            <h4>7.5.7 ECS with Fargate</h4>
+          <h4>7.5.1 Decoupling the Consumer and Server</h4>
+          <h4>7.5.2 SNS or Redis</h4>
+          <h4>7.5.3 Dockerizing Fjord Components</h4>
+          <h4>7.5.4 Docker</h4>
+          <h4>7.5.5 Managing Containers</h4>
+          <h4>7.5.6 On AWS with ECS</h4>
+          <h4>7.5.7 ECS with Fargate</h4>
           <h3 id="section-7-6">7.6 Goal 3: Create a secure system</h3>
-            <h4>7.6.1 Secure Backend</h4>
-            <h4>7.6.2 Secure Frontend</h4>
+          <h4>7.6.1 Secure Backend</h4>
+          <h4>7.6.2 Secure Frontend</h4>
           <h3 id="section-7-7">7.7 Goal 4: Make deployment simple</h3>
-            <h4>7.7.1 Provisioning AWS Resources</h4>
-            <h4>7.7.2 CloudFormation and CDK</h4>
+          <h4>7.7.1 Provisioning AWS Resources</h4>
+          <h4>7.7.2 CloudFormation and CDK</h4>
           <h3 id="section-7-8">7.8 Full Architecture</h3>
-
-
           <!-- Section 8 -->
-          <h2 id="section-8">8. Deploying & Using Fjord</h2>
+          <h2 id="section-8" class="h2">8. Deploying & Using Fjord</h2>
+          <p>
+            There are four steps to using Fjord.
+          </p>
+          <ol>
+            <li>
+              Installing & Using the Fjord Command Line Interface (CLI)
+            </li>
+            <li>
+              Customizing your infrastructure components
+            </li>
+            <li>
+              Deploying the Fjord architecture on AWS using the CLI
+            </li>
+            <li>
+              Integrating your client-side code to work with the Fjord architecture
+            </li>
+          </ol>
           <h3 id="section-8-1">8.1 The Fjord CLI</h3>
+          <p>
+            To deploy Fjord, it’s necessary to globally install the `fjord-cli` npm package, which provides a thin 
+            wrapper over the AWS CDK with a few simple Fjord commands.
+          </p>
+          After doing this, create and navigate into a new directory you wish to use for your new deployment.
+          <p>
+          </p>
           <h3 id="section-8-2">8.2 Customizing your infrastructure components</h3>
+          <p>In your directory, use the command `fjord setup`. This will generate a `FjordSettings.json` file and a
+             `cdk.out` file.
+          </p>
+          <p>This is where the business user’s configuration details live. This includes the name of your application, 
+            an optional JWT private key, the names of the Kafka topics you wish to pull records from, and the names of 
+            the topics you want to expose in client side code.
+          </p>
+          <p>Additionally, all consumer groups should be specified in this file, as an array of objects that each contain the
+             configurations like the name of the Kafka consumer group to which it belongs, and any details necessary to access 
+             the Kafka cluster (e.g. Broker IP addresses, security information, etc).
+          </p>
           <h3 id="section-8-3">8.3 Deploying Fjord to AWS</h3>
+          <p>After you’ve configured `FjordSettings.json`, run `fjord deploy`. This will provision and create more than 40 AWS 
+            resources needed for Fjord’s infrastructure and provide you with IP addresses for your NAT Gateways and the Load 
+            Balancer URL. If the business user has a firewall for the Kafka cluster, they’ll need to whitelist the IP address 
+            of the NAT gateways to ensure the Fjord Consumer is able to access the Kafka cluster.
+          </p>
           <h3 id="section-8-4">8.4 Client-side Integration</h3>
-
-
+          <p>To interact with Kafka from an HTML page or a mobile application, the business user will need to integrate their 
+            client-side code with Fjord. To do this, just a handful of lines of code will need to be added to their existing 
+            client-side code.
+          </p>
+          <p>The load balancer's URL that was output when Fjord was deployed needs to be used to establish a SSE connection 
+            using the EventSource API for browsers or a similar web API for Android or iOS mobile apps. A topic and userId 
+            also need to be specified, along with an optional JWT token, if the business user has configured their Fjord 
+            infrastructure to use JWTs.
+          </p>
+          <p>Finally, the front end developer can write the body of a callback function passed to the `onmessage` method, which 
+            will be executed each time a new record is received by Fjord.
+          </p>
+          <p>Each incoming record should be parsed from a text to a simple JavaScript object, which can then be incorporated into 
+            the page however the front end developer wants--whether as an additional row in a table, a data point on a graph, etc.
+          </p>
           <!-- Section 9 -->
-          <h2 id="section-9">9. Technical Challenges</h2>
+          <h2 id="section-9" class="h2">9. Technical Challenges</h2>
           <h3 id="section-9-1">9.1 Auto-scaling and Load Balancing</h3>
-            <h4>9.1.1 What should auto-scale?</h4>
-            <h4>9.1.2 Auto-scaling alarms</h4>
-            <h4>9.1.3 Load Balancer Algorithm</h4>
+          <h4>9.1.1 What should auto-scale?</h4>
+          <p>With Fjord deployed on ECS with Fargate, Fjord was ready-to-scale. Deciding which aspects should be automatically 
+            scaled, and which should be manually scaled, was the first challenge.
+          </p>
+          <p>Kafka’s smart consumer groups are Kafka’s native mechanism for implementing horizontal scaling. Kafka allows multiple
+             members in the same consumer group to split the workload of reading from the same topic, each member reading from a 
+             different partition. Because the business user has the ability to specify any number of members within each consumer 
+             group when deploying Fjord, we thought this manual mechanism would allow Fjord to take advantage of Kafka’s native 
+             scaling capabilities. We decided that the consumer tasks should therefore not be auto-scaled, as we did not want ECS 
+             alarms to conflict with Kafka.
+          </p>
+          <p>However, we decided to focus our auto-scaling efforts on the server. The servers could be scaled up and down depending 
+            on several different metrics, or what AWS calls alarms.
+          </p>
+          <h4>9.1.2 Auto-scaling alarms</h4>
+          <p>To set up scaling for the server, it was necessary to configure CloudWatch alarms that would trigger when a server
+             instance met a certain threshold of a given metric. AWS Auto-Scaling Groups could then be used to spin up (or down) 
+             an instance of the server. Metrics like CPU, RAM, and number of client connections could all be used to set scaling policies.
+          </p>
+          <p>Fjord employs autoscaling policies based on the memory and CPU usage of each instance of the server. Whichever reaches a 
+            pre-established threshold of percentage usage will trigger a new instance of the server to be spun up.
+          </p>
+          <p>Using auto-scaling policies based on memory and CPU allows the server to scale horizontally in response to either the 
+            number of front-end connections with clients that the server is handling, or based on the number of records the server 
+            is receiving from the Kafka consumers, since distributing each record to all clients requires more CPU usage.
+          </p>
+          <h4>9.1.3 Load Balancer Algorithm</h4>
+          <p>By default, the AWS Application Load Balancer (ALB) uses a round robin algorithm to distribute traffic across all the 
+            available servers. This is not an optimal algorithm for our use case, because it could result in an uneven distribution 
+            of clients on the servers, as it doesn’t take into account the fact that some client connections may have closed.
+          </p>
+          <p>With a round robin algorithm, if one server has only 10 clients and another has 8000, they would still be 
+            receiving the same number of new requests.
+          </p>
+          <p>To better distribute traffic by taking into account each server’s current workload, we reconfigured the ALB to use 
+            a Least Outstanding Requests (LOR) algorithm.
+          </p>
           <h3 id="section-9-2">9.2 CORS Issue & Heartbeat</h3>
-            <h4>9.2.1 Cross-Origin Requests</h4>
-            <h4>9.2.2 CORS Issue in Production</h4>
-            <h4>9.2.3 Solution: Heartbeat</h4>
+          <h4>9.2.1 Cross-Origin Requests</h4>
+          <p>A cross-origin request occurs when a page requests access to a resource from a different origin than itself. By 
+            default, browsers don’t allow this to happen, as a security measure. By using special request headers, you can explicitly 
+            enable Cross-Origin Resource Sharing (or CORS) to allow this to happen.
+          </p>
+          <p>In our SuperEats example, the SuperEats web servers are delivering an HTML page that makes a request for the Fjord stream.
+             The HTML page is on the SuperEats domain, which is different from the Fjord domain on AWS. For that reason, we knew we’d
+              need to implement CORS. We used the CORS library for Express, since our server is built in Nodejs.
+          </p>
+          <p>Everything was working fine locally, but we started experiencing some issues when we deployed our code to AWS.
+          </p>
+          <h4>9.2.2 CORS Issue in Production</h4>
+          <p>We noticed that after a brief period of inactivity, when there were no records streaming, clients would get a CORS 
+            error displayed on the browser console, and stopped receiving any records.
+          </p>
+          <p>Things were fine as long as we were regularly streaming records. But once the records stopped for a brief period
+             of time, we’d get a CORS error, and no longer be able to stream even after the records resumed streaming. This was
+              happening despite the fact that we had explicitly enabled CORS via the proper headers.
+          </p>
+          <p>The issue was that after a period of not receiving any more records, the load balancer would timeout the HTTP 
+            responses, thereby forgetting about the headers that had enabled CORS in the first place. So that’s why we’d get 
+            that CORS error.
+          </p>
+          <h4>9.2.3 Solution: Heartbeat</h4>
+          <p>The solution to this production-specific issue dealing with the load balancer was to implement what’s known as a
+             heartbeat or “pulse” for SSE.
+          </p>
+          <p>At a regular interval, about every 30 seconds by default, we send a blank message to all the clients 
+            connected to each server. The client doesn’t see this blank message appear anywhere, which is great, but the 
+            heartbeat is useful for two main reasons.
+          </p>
+          <p>First, this checks whether any client has closed the connection since the last time we sent an actual record 
+            (and also closes the connection on the server-side if that’s the case). Most importantly for us, this also lets
+             the load balancer know that the connection is still ongoing.
+          </p>
+          <p>Once we implemented the SSE heartbeat, we no longer had any CORS issues.
+          </p>
           <h3 id="section-9-3">9.3 Load Testing Fjord</h3>
-          
-
+          <p>There are two opening points in the Fjord architecture. First, the Fjord consumer pulls in streams of Kafka data 
+            from the business’s Kafka cluster. Second, the Fjord server pushes Kafka data to end users in the browser. While we 
+            did perform some stress testing on how many records Fjord could handle per second, we decided this was not the primary 
+            point to test. We built Fjord with the intent to stream information that’s usable for connected clients--a maximum 
+            dictated by the limits of human perception to a relatively low number. We assume the streaming data the business wants 
+            to deliver is about ten messages per second,[b] which the Fjord consumer and Elasticache for Redis are able to handle easily.
+          </p>
+          <p>The second opening point into Fjord is the load balancer that sits in front of the scalable layer of servers that
+             maintain SSE connections with clients. As business users may want to stream data to thousands or tens of thousands 
+             of customers and contract employees with traffic varying immensely depending on the time of day, the Fjord server 
+             needs to be able to handle bursty traffic, with some down periods and some periods with vast amounts of traffic.  
+          </p>
+          <p>With our use case in mind, we focused load testing on the frontend of the system--the number of connections the 
+            Fjord server could maintain simultaneously.
+          </p>
+          <p>When searching for a load testing tool, we first had a hard time finding an open-source library that worked with 
+            Server-Sent-Events. There were several options for load testing Websockets, like Artillery and Siege, but not as 
+            many options for SSE.
+          </p>
+          <p>We eventually came across Gatling, which actually had some good docs for testing SSE. Gatling is built on top of 
+            Java and Scala, which did entail learning and working with some Scala. We used Gatling to test what load an individual server could handle.
+          </p>
+          <p>We found that before scaling out, a single server can hold SSE connections for up to 8,500 simultaneous requests. 
+            Fjord servers use the minimal CPU and memory offered by AWS as a cost savings measure for the business user, to ensure 
+            that spend is limited to how much use the system is seeing, and no more than that. Rather than trying to vertically 
+            scale an individual Fjord server that would maintain a larger number of SSE connections, we simply had the AWS autoscaling 
+            policy spin up or down new instances as needed.  
+          </p>
           <!-- Section 10 -->
-          <h2 id="section-10">10. Future Work</h2>
+          <h2 id="section-10" class="h2">10. Future Work</h2>
+          <p>Fjord is an evolving open source project, with the potential for additional features in the future. We see a few 
+            particular improvements and optimizations we’d like to make with Fjord.
+          </p>
           <h3 id="section-10-1">10.1 More Advanced Security Features</h3>
+          <p>The Fjord consumer currently connects to a business’s Kafka cluster using a SASL-plain username and password. 
+            Kafka offers more advanced security features, including encrypting communication using SSL, making use of network 
+            access control lists, and encrypting data at rest, and it would be ideal for Fjord to integrate with more of Kafka’s 
+            security options.
+          </p>
           <h3 id="section-10-2">10.2 Bidirectional Communication</h3>
-        </div>
-      </div>
-    </div>
-
+          <p>Fjord is designed with one-way, server push streaming in mind. While this setup is a perfect fit for our use case, 
+            we could see the appeal of a bidirectional flow of events.
+          </p>
+          <p>With tighter Kafka security accomplished with point 10.1 above, we would feel better about allowing the business 
+            user to also inject events into their Kafka stream based on client actions.
+          </p>
+          <p>This could be done with either WebSockets or SSE over HTTP2.
+          </p>
+          <p>To allow this to happen, we would need a similar architecture to the process of consuming records from Kafka, 
+            but reversed. Once the servers receive data from the clients, they would then be publishers to the Redis pubsub 
+            middleware. We would need another service deployed on ECS with Fargate, this time to be producers to a Kafka cluster.
+          </p>
+          <p>Each producer would subscribe to the Redis pubsub, and push every received record to Kafka. We could allow the
+             business user to customize how many producers they want, perhaps based on some type of key added to the record 
+             by either the server or the front-end.
+          </p>
+    
 
     <div id="presentation" class="main-section">
       <div class="bg-gray">
