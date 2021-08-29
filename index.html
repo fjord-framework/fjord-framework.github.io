@@ -359,7 +359,7 @@
           <a href="#section-7-1">
             <div>
               <div class="bullet"><div></div></div>
-              <p>Architectural Overview through SuperEats Example</p>
+              <p>Overview of Triangular Pattern</p>
             </div>
           </a>
         </li>
@@ -375,7 +375,7 @@
           <a href="#section-7-3">
             <div>
               <div class="bullet"><div></div></div>
-              <p>First Steps</p>
+              <p>The Evolution of Fjord</p>
             </div>
           </a>
         </li>
@@ -383,31 +383,7 @@
           <a href="#section-7-4">
             <div>
               <div class="bullet"><div></div></div>
-              <p>Goal 1: Open Kafka streams to the internet</p>
-            </div>
-          </a>
-        </li>
-        <li data-section="section-7" class="subitem">
-          <a href="#section-7-5">
-            <div>
-              <div class="bullet"><div></div></div>
-              <p>Goal 2: Create a scalable PaaS infrastructure</p>
-            </div>
-          </a>
-        </li>
-        <li data-section="section-7" class="subitem">
-          <a href="#section-7-6">
-            <div>
-              <div class="bullet"><div></div></div>
-              <p>Goal 3: Create a secure system</p>
-            </div>
-          </a>
-        </li>
-        <li data-section="section-7" class="subitem">
-          <a href="#section-7-7">
-            <div>
-              <div class="bullet"><div></div></div>
-              <p>Goal 4: Make deployment simple</p>
+              <p>Fjord's Architecture</p>
             </div>
           </a>
         </li>
@@ -1038,31 +1014,146 @@
           </p>
           <!-- Section 7 -->
           <h2 id="section-7" class="h2">7. Building Fjord</h2>
-          <h3 id="section-7-1">7.1 Architectural Overview through SuperEats Example</h3>
+          <h3 id="section-7-1">7.1 Overview of Triangular Pattern</h3>
+          <p>Let’s first look at a high-level view of how an organization like SuperEats would integrate Fjord into their infrastructure.</p>
+
+          <p>First, SuperEats drivers, customers, and any restaurants working with SuperEats would all connect to the SuperEats web servers on a mobile app or a browser via HTTP/S (e.g., to SuperEats.com).</p>
+          (slide 34 gif)
+
+          <p>These servers would deliver, via either a mobile app or a browser, a page that initiates an SSE connection with (i.e. receives push updates from) the Fjord cluster deployed on SuperEats’ AWS account.</p>
+          (slide 35 gif)
+
+          <p>Fjord, in turn, would pull records from SuperEats’ Kafka cluster, and deliver them to connected clients who are interested in particular API topics.</p>
+          (slide 36 gif)
+
+          <p>It’s important to note that SuperEats drivers and customers are not aware that they are also receiving a data stream from Fjord. From their perspective, all they see is that they’re connected to the SuperEats domain or app.</p> 
+
+          <p>This allows SuperEats to deliver customized content that has the look and feel of their own website, without having to deal with the additional streaming load on their servers.</p>
+
+          <p>This structure is commonly referred to as the triangular pattern.</p>
+
+
           <h3 id="section-7-2">7.2 Design Goals</h3>
-          <h3 id="section-7-3">7.3 First Steps</h3>
-          <h4>7.3.1 Simulating the SuperEats Kafka Cluster Locally</h4>
-          <h4>7.3.2 Moving the SuperEats Kafka Cluster to a VPS</h4>
-          <h4>7.3.3 Securing the SuperEats Kafka Cluster</h4>
-          <h4>7.3.4 Expanding the SuperEats Kafka Cluster</h4>
-          <h3 id="section-7-4">7.4 Goal 1: Open Kafka streams to the internet</h3>
-          <h4>7.4.1 Building a Single Consumer</h4>
-          <h4>7.4.2 Building the Fjord Server</h4>
-          <h3 id="section-7-5">7.5 Goal 2: Create a scalable PaaS infrastructure</h3>
-          <h4>7.5.1 Decoupling the Consumer and Server</h4>
-          <h4>7.5.2 SNS or Redis</h4>
-          <h4>7.5.3 Dockerizing Fjord Components</h4>
-          <h4>7.5.4 Docker</h4>
-          <h4>7.5.5 Managing Containers</h4>
-          <h4>7.5.6 On AWS with ECS</h4>
-          <h4>7.5.7 ECS with Fargate</h4>
-          <h3 id="section-7-6">7.6 Goal 3: Create a secure system</h3>
-          <h4>7.6.1 Secure Backend</h4>
-          <h4>7.6.2 Secure Frontend</h4>
-          <h3 id="section-7-7">7.7 Goal 4: Make deployment simple</h3>
-          <h4>7.7.1 Provisioning AWS Resources</h4>
-          <h4>7.7.2 CloudFormation and CDK</h4>
-          <h3 id="section-7-8">7.8 Full Architecture</h3>
+          <p>We designed Fjord with four main goals in mind:</p>
+          <ul>
+            <li>API Proxy: open Kafka topics to client-side streaming,</li>
+            <li>Security: enable Fjord business users to restrict access to their Kafka stream through security parameters,</li>
+            <li>Scalability: create a scalable platform-as-a-service (PaaS) infrastructure, and</li>
+            <li>Ease of deployment: make deploying Fjord super simple.</li>
+          </ul>
+          <p>In the next section, we’ll walk through the evolution of how we built Fjord to achieve these design goals, and address some of the key decisions we made along the way.</p>
+          
+          <h3 id="section-7-3">7.3 The Evolution of Fjord</h3>
+          <h4>7.3.1 Setting up a real-time streaming server</h4>
+          <p>Our first step was to build a server that could stream content in real-time to connected clients. 
+            We actually built and tested two different prototypes first: one server was based on SSE, and another was based on WebSockets. 
+            Later when we chose SSE for our use case, we just kept expanding and building on top of the SSE-based one.
+          </p>
+          <p>Initially, we were testing this local server by using curl and Postman to make an HTTP post request to the server with some payload, and making sure that all connected clients received it. 
+            To simulate multiple clients, we had multiple tabs open.
+          </p>
+
+          <h4>7.3.2 Learning and Testing Kafka</h4>
+          <p>Our next step was to simulate a business’s Kafka cluster itself. 
+            To start, we implemented a simple Kafka cluster that consisted of a single Kafka broker.
+          </p>
+          <p>To test Kafka, we were initially using the terminal to both create and receive records to various topics with various partitions. 
+            Then we moved on to producing and consuming Kafka records from a NodeJS application.
+          </p>
+          <p>We used a NodeJS client library called KafkaJS. KafkaJS is widely used, well tested, and has an active online and Slack community. 
+            This client library also gave us the option to start with some default configurations for the consumer and adjust them as needed to optimize the consumer’s performance. 
+            On the producer side of things, the library also allowed us to create scripts that could produce records in bulk, like 1000 records per second.
+          </p>
+          <p>After we were able to produce and receive Kafka records locally, we set up a virtual private server (VPS) on DigitalOcean (a “droplet”) and deployed Kafka there. 
+            We then connected our local producer and consumer to the remote Kafka broker, ensuring we could both send and then also receive records from the remote DO droplet.
+          </p>
+
+          <h4>7.3.3 Accessing a Secure Kafka Cluster</h4>
+          <p>At this point, we started to consider some basic security measures a business user like SuperEats might take. Kafka is not secure by default, and it can durably store sensitive data.
+          </p>
+          <p>So, we set up some minimal security that a business user might employ to secure their cluster--namely, by enabling a firewall for the VPS, and whitelisting the producer & consumer so it could still reach the remote Kafka broker. Additionally, we implemented a simple SASL username and password that any Kafka client would need to pass to the Kafka broker to authenticate before either producing or consuming records. This was important to be able to determine how our consumer should access a properly secured Kafka broker.
+          </p>
+          <p>One item to note is that we chose to work with SASL-PLAIN, which means our client credentials are not encrypted as they are sent from the Kafka client into the cluster. This means that a malicious actor could intercept and read the username and password. In practice, SASL should only be used alongside some form of encryption, like TLS or GSSAPI. We assume that the business using Fjord would have TLS enabled, in which case setting up SASL-SSL is similar to enabling SASL-PLAIN, and relatively simple. 
+          </p>
+
+          <h4>7.3.4 Expanding the Fjord Server with Kafka and JWT</h4>
+          <p>Once we had a consumer that was able to pull records from a Kafka topic on a secure Kafka broker, we needed to figure out how to send those records to our web server so that it could then transmit them to clients.
+          </p>
+          <p>Initially, we had the consumer make a simple HTTP Post request directly to our SSE server with each record received from Kafka. With each received post request, the server would then push the received data along to all connected clients via SSE.
+          </p>
+          <p>We also worked on restricting access to the server stream by using JSON Web Tokens (JWTs). JWTs (pronounced “jots”) act as a way to represent claims between two parties over the internet, and function via a private/public key generation and exchange process between a client and server.
+          </p>
+          <p>The private key is used by the server to both generate valid public keys, and to then also verify that a given public key (i.e. a token) is valid.
+          </p>
+          <p>Implementing JWTs required some code changes to the server, and an additional line of client-side code. Fjord leaves the choice up to the business user--if they wish to use JWTs to restrict access to their streams of data, they can. They can also leave their streams open to the public if they’re streaming non-sensitive information.
+          </p>
+          <p>With a functioning API Proxy prototype that could receive records from Kafka and send them along to connected clients, the next challenge was deploying to and testing on AWS. First, we had more work and exploration to do.
+          </p>
+
+          <h4>7.3.5 Dockerizing components & Exploring AWS</h4>
+          <p>After doing some initial exploration of the AWS Cloud Development Kit (CDK), and the options for deploying infrastructure on AWS, we knew we were probably going to use AWS’s Elastic Container Service (ECS) as it could let us achieve our scalability needs down the line.
+          </p>
+          <p>In order to use ECS, however, we needed to first containerize both the server and the consumer. For that, we used Docker.
+          </p>
+          <p>A Docker image is an artifact that consists of an application, its environment, and all necessary dependencies that it needs to run. A Docker image can be pulled from a registry and run as a Docker container on any machine without needing to ensure the machine is correctly configured with the appropriate dependencies installed. This allows you to easily run multiple instances on one or more VPSs or bare metal servers. We built Docker images for both the consumer and server, making them horizontally scalable.
+          </p>
+          <p>AWS ECS offers two launch types--EC2 and Fargate. With EC2, you get more control over your deployment, but you need to provision and manage the servers your containers are running on. With ECS and Fargate, AWS manages the containers and the underlying servers they’re run on.
+          </p>
+          <p>We decided to go with ECS and Fargate, so Fjord business users like SuperEats wouldn’t need to worry about provisioning the underlying servers that the Fjord components are running on.
+          </p>
+
+          <h4>7.3.6 Decoupling the Consumer and Server</h4>
+          <p>At this point, the consumer needed to be aware of the IP and port on which the server is running, so that it can send POST requests with records to it. This works as long as there’s only one server instance.
+          </p>
+[graphic of second server not receiving data]
+          <p>But the whole point of using ECS is to be able to scale, and have multiple servers as needed to handle more load. With the current setup, any newly deployed server would not receive records from the consumer.
+          </p>
+[graphic of consumer having access to a routing table]
+
+          <p>One approach could be to somehow have the consumer be aware of every newly deployed server, and then make a separate POST request to every server, for every received record from Kafka. But this solution would put a lot of strain and pressure on the consumer, which is already working hard to keep up with the stream of records coming from Kafka.
+          </p>
+[graphic of middleware in between consumer and server]
+          <p>The solution we chose was to decouple the consumer from the server by using a middleware that would provide a publish-subscribe mechanism.
+          </p>
+[graphic on comparison chart]
+          <p>We looked at a few different options for this middleware. One option was to use a publish subscribe model with an AWS messaging service, such as Simple Notification Service (SNS). SNS is a fully managed, publish subscribe messaging service that provides asynchronous message delivery from publishers to subscribers. While SNS is usually used to send data from a microservice to an end user via a text message or an email, it can also be placed between microservices to decouple their communication. SNS can fan out messages to multiple subscribers, which matched with our desire to get the records from one consumer to multiple instances of the server.
+          </p> 
+          <p>However, SNS is a more full-featured service that includes features like message filtering and durable storage of messages, which we did not require. SNS also requires some additional code on our server to handle the initial subscription to an SNS topic as well as logic to handle unsubscribing clients as they close the connection to the server. 
+          </p>
+          <p>Another interesting service was Redis and AWS’s Elasticache for Redis. While Redis is usually used as a caching layer, it also has publish and subscribe functionality. In this architectural pattern, one Redis client can publish to a particular channel on the Redis server, and any number of additional Redis clients can subscribe to that channel. 
+          </p>
+          <p>AWS Elasticache is built to work seamlessly with Redis, which meant that after we configured our consumer to publish to a Redis channel and configured our server to subscribe to the Redis channel, no additional changes needed to be made for Fjord to work in the AWS ecosystem. 
+          </p>
+          <p>After comparing SNS and Redis, we decided AWS Elasticache and Redis would be a perfect fit for Fjord. Redis is extremely fast, lightweight, and required minimal code changes to the consumer and server.
+          </p>
+
+          <h4>7.3.7 Facilitating Deployments: the AWS CDK and Fjord CLI</h4>
+          <p>Our final design goal was to make Fjord simple to deploy. To facilitate the ECS cluster that the server and consumer live in as well as the Elasticache cluster, more than 40 AWS resources are required, including a virtual private cloud (VPC), security groups, subnets, NAT gateways, an application load balancer, and many others. 
+          </p>
+          <p>It’s possible to manually deploy each resource on the AWS Console, which is the web UI developers can interact with by clicking and specifying configurations. However, this is error-prone and not a repeatable, feasible way to deploy infrastructure on AWS, especially when one of the key design goals of Fjord is to make deployment simple. 
+          </p>
+          <p>AWS CloudFormation allows a developer to model and set up AWS resources by creating a template that describes all AWS resources. Under the hood, AWS takes care of actually deploying and managing the state of all these resources. 
+          </p>
+          <p>One simple way to interact with CloudFormation is to use the AWS Cloud Development Kit (CDK), which allows a developer to write code in a number of their favorite languages that will eventually be translated to a CloudFormation template. We decided to go with the AWS CDK, which makes it as simple as running a few AWS CDK commands to setup, deploy, and tear down all AWS resources.
+          </p>
+          <p>With the AWS CDK deployment code written, Fjord was now a scalable, secure, PaaS.
+          </p>
+          <p>But we were not done yet. Using the CDK is still a relatively cumbersome process, with lots of mostly irrelevant outputs to the console.
+          </p>
+          <p>Our final task was building a Command Line Interface (CLI) on top of the CDK. We designed this CLI to abstract away much of the underlying process, and provide a more streamlined and enjoyable user experience. You can learn more about this in section 8.
+          </p>
+
+          <h3 id="section-7-4">7.4 Fjord's Architecture</h3>
+          <p>The fully detailed architecture diagram of a deployed Fjord cluster looks like this.</p>
+          <img class="lazy" data-src="./assets/media/gifs/full_flow.gif"/>
+          <ol>
+          <li>Clients, seen here in the yellow area, connect to Fjord via a load balancer.</li>
+          <li>The load balancer connects each client to the most available server. These servers are in ECS and managed by Fargate, and automatically scale to accommodate more or less traffic.</li>
+          <li>On the other end of the process, consumers are receiving data from the business user’s Kafka cluster. This traffic is routed through a NAT Gateway for added security, so that only the responses to requests from the consumers can come into the system.</li>
+          <li>Finally, sitting in between the servers and the consumers is the Redis pub-sub server. This allows servers to automatically subscribe to all the content being published by all the consumers, and decouples their interaction.</li>
+          </ol>
+          <p>How does all this infrastructure get deployed to AWS? Let's look at that next.</p>
+          
           <!-- Section 8 -->
           <h2 id="section-8" class="h2">8. Deploying & Using Fjord</h2>
           <p>
