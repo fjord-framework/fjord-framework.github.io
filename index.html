@@ -123,16 +123,16 @@
     <div id="intro" class="main-section">
       <div class="h-full">
         <img src="./assets/logo/logo-name.svg" /><br/>
-        <div class ="opaque">
+        <div>
         <h2>
           <span>An open-source framework that provides</span><br /> 
-          a
-          <span class="text-pink">real-time </span>
-          <span class="text-blue">API Proxy </span>
-          for <span class="text-teal"> Kafka.</span>
+          a real-time API Proxy for Kafka
+          <!-- <span class="text-blue">real-time </span>
+          <span class="text-pink">API Proxy </span>
+          for <span class="text-teal"> Kafka.</span> -->
         </h2>
         </div>
-        <h3>(scroll down to learn more)</h3>
+        
       </div>
     </div>
 
@@ -710,10 +710,8 @@
             driving across town, this seemed like a useful feature.
           </p>
           <p>
-            The auto-reconnect feature also proved useful for auto-scaling purposes. Because, as we’ll explore later, the URL that clients are
-             connected to is actually that of a load balancer, this meant that whenever a server has either crashed or needs to be shut down because 
-             of low activity, all of the clients currently receiving data from that server would automatically be reconnected to another existing server. 
-             There was no need for us to configure any additional logic to handle that.
+            The auto-reconnect feature also proved useful for auto-scaling purposes. Because, as we’ll explore later, the URL that clients are connected to is actually that of a load balancer, this meant that whenever a server has either crashed or needs to be shut down because of low activity, all of the clients currently receiving data from that server would automatically be reconnected to another existing server. 
+            There was no need for us to configure any additional logic to handle that.
           </p>
           <p>
             The auto-reconnect feature worked in perfect tandem with the load balancer to persist client-server connections.
@@ -1053,7 +1051,7 @@
             We actually built and tested two different prototypes first: one server was based on SSE, and another was based on WebSockets. 
             Later when we chose SSE for our use case, we just kept expanding and building on top of the SSE-based one.
           </p>
-          <p>Initially, we were testing this local server by using curl and Postman to make an HTTP post request to the server with some payload, and making sure that all connected clients received it. 
+          <p>Initially, we were testing this local server by using curl and Postman to make an HTTP post request to the server with some payload, and making sure that all connected clients received it.
             To simulate multiple clients, we had multiple tabs open.
           </p>
 
@@ -1294,11 +1292,11 @@
             <img src="assets/media/gifs/cors.gif" class="case-study-image" />
             <figcaption>CORS Issue in Production</figcaption>
           </figure>
-          <p>Things were fine as long as we were regularly streaming records. But once the records stopped for a brief period
-             of time, we’d get a CORS error, and no longer be able to stream even after the records resumed streaming. This was
-              happening despite the fact that we had explicitly enabled CORS via the proper headers.
+          <p>Things were fine as long as we were regularly streaming records. But once the records stopped for a brief period of time, we’d get a CORS error, and no longer be able to stream even after the records resumed streaming. 
+             This was happening despite the fact that we had explicitly enabled CORS via the proper headers.
           </p>
-          <p>The issue was that after a period of not receiving any more records, the load balancer would timeout the HTTP responses, thereby forgetting about the headers that had enabled CORS in the first place. So that’s why we’d get that CORS error.
+          <p>The issue was that after a period of not receiving any more records, the load balancer would timeout the HTTP responses, thereby forgetting about the headers that had enabled CORS in the first place. 
+            So that’s why we’d get that CORS error.
           </p>
           <h4>9.2.3 Solution: Heartbeat</h4>
           <p>The solution to this production-specific issue dealing with the load balancer was to implement what’s known as a heartbeat or “pulse” for SSE.
@@ -1307,8 +1305,8 @@
             <img src="assets/media/gifs/heartbeat.gif" class="case-study-image" />
             <figcaption>Heartbeat to all clients</figcaption>
           </figure>
-          <p>At a regular interval, about every 30 seconds by default, we send a blank message to all the clients 
-            connected to each server. The client doesn’t see this blank message appear anywhere, which is great, but the heartbeat is useful for two main reasons.
+          <p>At a regular interval, about every 30 seconds by default, we send a blank message to all the clients connected to each server. 
+            The client doesn’t see this blank message appear anywhere, which is great, but the heartbeat is useful for two main reasons.
           </p>
           <p>First, this checks whether any client has closed the connection since the last time we sent an actual record 
             (and also closes the connection on the server-side if that’s the case). Most importantly for us, this also lets
@@ -1317,33 +1315,21 @@
           <p>Once we implemented the SSE heartbeat, we no longer had any CORS issues.
           </p>
           <h3 id="section-9-3">9.3 Load Testing Fjord</h3>
-          <p>There are two opening points in the Fjord architecture. First, the Fjord consumer pulls in streams of Kafka data 
-            from the business’s Kafka cluster. Second, the Fjord server pushes Kafka data to end users in the browser. While we 
-            did perform some stress testing on how many records Fjord could handle per second, we decided this was not the primary 
-            point to test. We built Fjord with the intent to stream information that’s usable for connected clients--a maximum 
-            dictated by the limits of human perception to a relatively low number. We assume the streaming data the business wants 
-            to deliver is about ten messages per second,[b] which the Fjord consumer and Elasticache for Redis are able to handle easily.
+          <p>There are two opening points in the Fjord architecture. First, the Fjord consumer pulls in streams of Kafka data from the business’s Kafka cluster.
+            Second, the Fjord server pushes Kafka data to end users in the browser. 
+            While we did perform some stress testing on how many records Fjord could handle per second, we decided this was not the primary point to test. 
+            We built Fjord with the intent to stream information that’s usable for connected clients--a maximum dictated by the limits of human perception to a relatively low number. We assume the streaming data the business wants to deliver is about ten messages per second, which the Fjord consumer and Elasticache for Redis are able to handle easily.
           </p>
-          <p>The second opening point into Fjord is the load balancer that sits in front of the scalable layer of servers that
-             maintain SSE connections with clients. As business users may want to stream data to thousands or tens of thousands 
-             of customers and contract employees with traffic varying immensely depending on the time of day, the Fjord server 
-             needs to be able to handle bursty traffic, with some down periods and some periods with vast amounts of traffic.  
+          <p>The second opening point into Fjord is the load balancer that sits in front of the scalable layer of servers that maintain SSE connections with clients. As business users may want to stream data to thousands or tens of thousands of customers and contract employees with traffic varying immensely depending on the time of day, the Fjord server needs to be able to handle bursty traffic, with some down periods and some periods with vast amounts of traffic.  
           </p>
-          <p>With our use case in mind, we focused load testing on the frontend of the system--the number of connections the 
-            Fjord server could maintain simultaneously.
+          <p>With our use case in mind, we focused load testing on the frontend of the system--the number of connections the Fjord server could maintain simultaneously.
           </p>
-          <p>When searching for a load testing tool, we first had a hard time finding an open-source library that worked with 
-            Server-Sent-Events. There were several options for load testing Websockets, like Artillery and Siege, but not as 
-            many options for SSE.
+          <p>When searching for a load testing tool, we first had a hard time finding an open-source library that worked with Server-Sent-Events. There were several options for load testing Websockets, like Artillery and Siege, but not as many options for SSE.
           </p>
-          <p>We eventually came across Gatling, which actually had some good docs for testing SSE. Gatling is built on top of 
-            Java and Scala, which did entail learning and working with some Scala. We used Gatling to test what load an individual server could handle.
+          <p>We eventually came across Gatling, which actually had some good docs for testing SSE. Gatling is built on top of Java and Scala, which did entail learning and working with some Scala. We used Gatling to test what load an individual server could handle.
           </p>
           <p>We found that before scaling out, a single server can hold SSE connections for up to 8,500 simultaneous requests. 
-            Fjord servers use the minimal CPU and memory offered by AWS as a cost savings measure for the business user, to ensure 
-            that spend is limited to how much use the system is seeing, and no more than that. Rather than trying to vertically 
-            scale an individual Fjord server that would maintain a larger number of SSE connections, we simply had the AWS autoscaling 
-            policy spin up or down new instances as needed.  
+            Fjord servers use the minimal CPU and memory offered by AWS as a cost savings measure for the business user, to ensure that spend is limited to how much use the system is seeing, and no more than that. Rather than trying to vertically scale an individual Fjord server that would maintain a larger number of SSE connections, we simply had the AWS autoscaling policy spin up or down new instances as needed.  
           </p>
           <!-- Section 10 -->
           <h2 id="section-10" class="h2">10. Future Work</h2>
