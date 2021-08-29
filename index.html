@@ -57,11 +57,11 @@
   <body>
     <header class="mobile-menu-closed">
       <div id="header">
-        <a href="/">
+        <a href="./index.html">
           <img src="assets/logo/logo-name.svg" />
         </a>
         <nav>
-          <a href="#start-here" class="selected">Start Here</a>
+          <a href="#start-here" class="selected">Overview</a>
           <a href="#case-study">Case Study</a>
           <a href="#presentation">Presentation</a>
           <a href="#our-team">Our Team</a>
@@ -116,72 +116,69 @@
         <a href="#presentation">Presentation</a>
         <a href="#our-team">Our Team</a>
         <a href="https://github.com/fjord-framework" target="_blank"
-          ><i class="fab fa-github"></i> GitHub</a
-        >
+          ><i class="fab fa-github"></i></a>
       </div>
     </header>
 
+    <div id="intro" class="main-section">
+      <div class="h-full">
+        <img src="./assets/logo/logo-name.svg" /><br/>
+        <div class ="opaque">
+        <h2>
+          <span>An open-source framework that provides</span><br /> 
+          a
+          <span class="text-pink">real-time </span>
+          <span class="text-blue">API Proxy </span>
+          for <span class="text-teal"> Kafka.</span>
+        </h2>
+        </div>
+        <h3>(scroll down to learn more)</h3>
+      </div>
+    </div>
+
     <div id="start-here" class="main-section">
       <div class="h-full">
-        <div class="static-logo-color"></div>
-        <div class="bg-gray">
-          <img
-            class="fjord sm-screen"
-            src="assets/logo/fjord-vertical.png"
-          />
-          <img class="fjord lg-screen" src="assets/logo/fjord-name.png" />
-
-          <p class="light-text">
-            An open-source framework <br />that provides a
-            <span class="text-pink">real-time </span>
-            <span class="text-blue">API Proxy </span> <br />
-            for <span class="text-teal"> Kafka.</span><br />
-          </p>
-        </div>
-      </div>
-      <div class="h-full">
-        <div class="bg-blue static-logo-teal-light">
-          <h2>Easy to Manage & Deploy</h2>
+        <div class="bg-blue static-logo-color feature">
+          <h2>Client-side Streaming from Kafka in real-time</h2>
         </div>
         <div class="bg-blue">
-          <h2 class="sm-header">Easy to Manage & Deploy</h2>
-          <p>
-            Fjord abstracts away the complexity of working with the AWS cloud
-            infrastructure by automating the deployment process.
-          </p>
-          <img class="lazy" data-src="assets/media/case-study/gifs/full_flow.gif"/>
+            <video autoplay loop muted playsinline>
+              <source src="./assets/media/mp4/API-Proxy.mp4" type="video/mp4" />
+              Your browser does not support the HTML5 Video element.
+            </video>
         </div>
       </div>
 
-      <!-- 
-      Commenting the portion below out for now.
-      1. notice how it's a video
-      2. look at their source code, they have 2 sections like this 
-      3. I updated it to just use an image instead, lines 141-153
-      -->
-      <!-- <div class="h-full">
-        <div class="bg-pink static-logo-pink-light">
-          <h2>Modular and Flexible</h2>
+      <div class="h-full">
+        <div class="bg-pink static-logo-teal-light feature">
+          <h2>Scalable infrastructure on AWS within minutes</h2>
         </div>
         <div class="bg-pink">
-          <h2 class="sm-header">Modular and Flexible</h2>
+          <img src="./assets/media/images/aws.png"/><br/>
           <p>
-            fjord Functions are serverless functions that can be customized for
-            your realtime needs and reused across applications.
+            Use Fjord's CLI to deploy all the infrastructure you'll need
+            to Amazon Web Services within minutes.
           </p>
-
-          <video autoplay loop muted playsinline class="pad">
-            <source
-              src="images/diagrams/infrastructure-3.mp4"
-              type="video/mp4"
-            />
-          </video>
         </div>
-      </div> -->
+      </div>
+      
+      <div class="h-full">
+        <div class="bg-dark-blue static-logo-teal-light feature">
+          <h2>Customizable Components</h2>
+        </div>
+        <div class="bg-dark-blue">
+          
+          <img class="lazy" data-src="./assets/media/gifs/full_flow.gif"/>
+          <p>
+            Fjord's elegant architecture is fully customizable
+          </p>
+        </div>
+      </div>
       
     </div>
 
     <aside id="toc">
+      Case Study <br /><br />
       <ul>
         <!-- Section 1 -->
         <li data-section="section-1" class="selected">
@@ -192,8 +189,6 @@
             </div>
           </a>
         </li>
-         
-
         <!-- Section 2 -->
         <li data-section="section-2">
           <a href="#section-2">
@@ -219,8 +214,6 @@
             </div>
           </a>
         </li>
-
-        
         <!-- Section 3 -->
         <li data-section="section-3">
           <a href="#section-3">
@@ -254,8 +247,6 @@
             </div>
           </a>
         </li>
-        
-
         <!-- Section 4 -->
         <li data-section="section-4">
           <a href="#section-4">
@@ -289,8 +280,6 @@
             </div>
           </a>
         </li>
-
-
         <!-- Section 5 -->
         <li data-section="section-5">
           <a href="#section-5">
@@ -324,8 +313,6 @@
             </div>
           </a>
         </li>
-
-
         <!-- Section 6 -->
         <li data-section="section-6">
           <a href="#section-6">
@@ -359,8 +346,6 @@
             </div>
           </a>
         </li>
-
-
         <!-- Section 7 -->
         <li data-section="section-7">
           <a href="#section-7">
@@ -426,8 +411,6 @@
             </div>
           </a>
         </li>
-
-        
         <!-- Section 8 -->
         <li data-section="section-8">
           <a href="#section-8">
@@ -469,8 +452,6 @@
             </div>
           </a>
         </li>
-
-
         <!-- Section 9 -->
         <li data-section="section-9">
           <a href="#section-9">
@@ -504,8 +485,6 @@
             </div>
           </a>
         </li> 
-
-
         <!-- Section 10 -->
         <li data-section="section-10">
           <a href="#section-10">
@@ -536,10 +515,7 @@
 
     <div id="case-study" class="main-section">
       <div id="case-study-content">
-        <div class="prose">
-
-
-         
+        <div class="prose">         
           <h1>Case Study</h1>
 
           <!-- Section 1 -->
@@ -556,7 +532,7 @@
             This enables any number of authorized end users--whether on a browser or a mobile app--to receive data streams 
             from any number of Kafka topics from any number of Kafka clusters.          
             <figure>
-              <img src="assets/media/case-study/images/kafka real-time fjord.png" class="case-study-image" />
+              <img src="assets/media/images/kafka real-time fjord.png" class="case-study-image" />
               <figcaption>Real-time API Proxy for Kafka</figcaption>
             </figure>
           </p>
@@ -604,7 +580,7 @@
             from any registered restaurant, and independent contractors to pick up the order from that restaurant, and drive the meal to the customer.
           </p>
           <figure>
-            <img src="assets/media/case-study/gifs/Events.gif" class="case-study-image" />
+            <img src="assets/media/gifs/Events.gif" class="case-study-image" />
             <figcaption>Real-time Updates</figcaption>
           </figure>
           <p>SuperEats works with thousands of restaurants, from well-known multinational chains like Chipotle to small hole-in-the-wall shops 
@@ -673,7 +649,7 @@
             new request to receive another update from the server.
           </p>
           <figure>
-            <img src="assets/media/case-study/gifs/polling.gif" class="case-study-image" />
+            <img src="assets/media/gifs/polling.gif" class="case-study-image" />
             <figcaption>Long-Polling</figcaption>
           </figure>
           <p>
@@ -705,7 +681,7 @@
             At the same time, the server starts to send any data received, all in the same HTTP response.
           </p>
           <figure>
-            <img src="assets/media/case-study/gifs/sse.gif" class="case-study-image" />
+            <img src="assets/media/gifs/sse.gif" class="case-study-image" />
             <figcaption>Server-Sent Events</figcaption>
           </figure>
           <p>
@@ -725,7 +701,7 @@
             protocol means that both the client and the server can send data to each other as long as the WebSocket connection remains open.
           </p>
           <figure>
-            <img src="assets/media/case-study/gifs/ws.gif" class="case-study-image" />
+            <img src="assets/media/gifs/ws.gif" class="case-study-image" />
             <figcaption>WebSockets</figcaption>
           </figure>
           <p>
@@ -777,7 +753,7 @@
             spending more time around configurations.
           </p>
           <figure>
-            <img src="assets/media/case-study/images/WS vs SSE Dark.svg" class="case-study-image" />
+            <img src="assets/media/images/WS vs SSE Dark.svg" class="case-study-image" />
             <figcaption>WebSockets vs SSE</figcaption>
           </figure>
           <p>
@@ -828,7 +804,7 @@
             itself have multiple instances, all of which need to communicate with all the instances of the paired microservice.
           </p>
           <figure>
-            <img src="assets/media/case-study/gifs/microservices.gif" class="case-study-image" />
+            <img src="assets/media/gifs/microservices.gif" class="case-study-image" />
             <figcaption>Microservices Death Star</figcaption>
           </figure>
           <p>
@@ -843,7 +819,7 @@
             facilitate inter-microservices communication.
           </p>
           <figure>
-            <img src="assets/media/case-study/gifs/producer_consumer.gif" class="case-study-image" />
+            <img src="assets/media/gifs/producer_consumer.gif" class="case-study-image" />
             <figcaption>Event-Driven Architecture</figcaption>
           </figure>
           <p>
@@ -935,7 +911,7 @@
             broker, has a much less noticeable impact on the additional work the broker needs to do.
           </p>
           <figure>
-            <img src="assets/media/case-study/gifs/kafka.gif" class="case-study-image" />
+            <img src="assets/media/gifs/kafka.gif" class="case-study-image" />
             <figcaption>Event Streaming</figcaption>
           </figure>
           <p>
