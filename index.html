@@ -501,23 +501,20 @@
             Fjord is an open-source framework that enables client-side streaming from Kafka in real-time.
           </p>
           <p>
-            Through Fjord’s CLI, developers can easily and quickly deploy dozens of components on Amazon Web Services (AWS) 
-            to offload the streaming responsibilities to Fjord’s scalable real-time API proxy infrastructure. 
+            Through Fjord’s CLI, developers can easily and quickly deploy dozens of components on Amazon Web Services (AWS) to offload the streaming responsibilities to Fjord’s scalable real-time API proxy infrastructure. 
           </p>
+          <video autoplay loop muted playsinline>
+            <source src="./assets/media/mp4/API-Proxy.mp4" type="video/mp4" />
+            Your browser does not support the HTML5 Video element.
+          </video>
           <p>
-            This enables any number of authorized end users--whether on a browser or a mobile app--to receive data streams 
-            from any number of Kafka topics from any number of Kafka clusters.          
-            <figure>
-              <img src="assets/media/images/kafka real-time fjord.png" class="case-study-image" />
-              <figcaption>Real-time API Proxy for Kafka</figcaption>
-            </figure>
+            This enables any number of authorized end users--whether on a browser or a mobile app--to receive data streams from any number of Kafka topics from any number of Kafka clusters.          
           </p>
           <p>
             In this case study, we outline the key challenges we faced as we worked with real-time APIs, event driven architectures, 
             and Kafka as an event streaming platform. 
           <p>
-            We also explain the various AWS components of the Fjord distributed system, and how we built the Fjord CLI to be a layer 
-            on top of the AWS Cloud Development Kit (CDK) to make the deployment process as simple and user-friendly as possible.
+            We also explain the various AWS components of the Fjord distributed system, and how we built the Fjord CLI to be a layer on top of the AWS Cloud Development Kit (CDK) to make the deployment process as simple and user-friendly as possible.
           </p>
           <p>
             Along the way, we’ll discuss the engineering choices we made, the architectural tradeoffs, and the evolution of how Fjord came to be.
@@ -566,9 +563,12 @@
             step of the way. For example, customers should know when their meal was made, when the driver has picked it up, when the driver is 
             about five minutes away from their home, and finally when their meal is at their doorstep.
           </p>
+          <figure>
+            <img src="assets/media/gifs/end_users_superEats.gif" class="case-study-image" />
+            <figcaption>SuperEats clients and infrastructure</figcaption>
+          </figure>
           <p>
-            To accomplish this, SuperEats needs a real-time infrastructure that is secure, easy to deploy and use, and takes advantage of their 
-            existing infrastructure.
+            To accomplish this, SuperEats needs a real-time infrastructure that is secure, easy to deploy and use, and takes advantage of their existing infrastructure.
           </p>
           <!-- Section 3 -->
           <h2 id="section-3" class="h2">3. What is Real-time?</h2>
@@ -602,9 +602,9 @@
           </p>
           <figure>
             <blockquote>
-              <p>“Real-time is the ability to react to anything that occurs as it occurs, before it loses its importance.”</p>
+              <p>Real-time is the ability to react to anything that occurs as it occurs, before it loses its importance.</p>
             </blockquote>
-            <figcaption>-Ably<cite> Real-Time Definition</cite></figcaption>
+            <figcaption>-Ably<cite></cite></figcaption>
           </figure>
           <p>
             This definition further illustrates the main idea here: within the context of web applications, the goal of real-time streaming is 
@@ -780,7 +780,7 @@
             itself have multiple instances, all of which need to communicate with all the instances of the paired microservice.
           </p>
           <figure>
-            <img src="assets/media/gifs/microservices.gif" class="case-study-image" />
+            <img src="assets/media/gifs/deathstar.gif" class="case-study-image" />
             <figcaption>Microservices Death Star</figcaption>
           </figure>
           <p>
@@ -939,6 +939,10 @@
              generally a server that sits between your web application and a backend service. Developers can build web applications
               using the set of API endpoints without knowing anything about the back-end.
           </p>
+          <figure>
+            <img src="assets/media/gifs/api proxy.gif" class="case-study-image" />
+            <figcaption>An API Proxy</figcaption>
+          </figure>
           <p>
             With an API proxy, end-users can send HTTP requests to the API proxy. The API proxy would  sit between Kafka and the internet-facing
              end-users and translate the traffic between the two protocols.
@@ -1103,20 +1107,35 @@
           </p>
 
           <h4>7.3.6 Decoupling the Consumer and Server</h4>
+          
           <p>At this point, the consumer needed to be aware of the IP and port on which the server is running, so that it can send POST requests with records to it. This works as long as there’s only one server instance.
           </p>
-[graphic of second server not receiving data]
+          <figure>
+            <img src="assets/media/gifs/decoupling 1.gif" class="case-study-image" />
+            <figcaption>Consumer making HTTP Post request to One Server</figcaption>
+          </figure>
           <p>But the whole point of using ECS is to be able to scale, and have multiple servers as needed to handle more load. With the current setup, any newly deployed server would not receive records from the consumer.
           </p>
-[graphic of consumer having access to a routing table]
-
-          <p>One approach could be to somehow have the consumer be aware of every newly deployed server, and then make a separate POST request to every server, for every received record from Kafka. But this solution would put a lot of strain and pressure on the consumer, which is already working hard to keep up with the stream of records coming from Kafka.
+          <figure>
+            <img src="assets/media/gifs/decoupling 2.gif" class="case-study-image" />
+            <figcaption>Newly deployed Server Not Receiving Messages</figcaption>
+          </figure>
+          <p>One approach could be to somehow have the consumer be aware of every newly deployed server, and then make a separate POST request to every server, for every received record from Kafka. 
           </p>
-[graphic of middleware in between consumer and server]
+          <figure>
+            <img src="assets/media/gifs/decoupling 3.gif" class="case-study-image" />
+            <figcaption>Consumer With Routing Table</figcaption>
+          </figure>
+          <p>But this approach would put a lot of strain and pressure on the consumer, which is already working hard to keep up with the stream of records coming from Kafka.</p>
           <p>The solution we chose was to decouple the consumer from the server by using a middleware that would provide a publish-subscribe mechanism.
           </p>
-[graphic on comparison chart]
-          <p>We looked at a few different options for this middleware. One option was to use a publish subscribe model with an AWS messaging service, such as Simple Notification Service (SNS). SNS is a fully managed, publish subscribe messaging service that provides asynchronous message delivery from publishers to subscribers. While SNS is usually used to send data from a microservice to an end user via a text message or an email, it can also be placed between microservices to decouple their communication. SNS can fan out messages to multiple subscribers, which matched with our desire to get the records from one consumer to multiple instances of the server.
+          <figure>
+            <img src="assets/media/gifs/decoupling 4.gif" class="case-study-image" />
+            <figcaption>Middleware in between consumer and server</figcaption>
+          </figure>
+          <p>We looked at a few different options for this middleware.</p>
+          [graphic on comparison chart]
+          <p>One option was to use a publish subscribe model with an AWS messaging service, such as Simple Notification Service (SNS). SNS is a fully managed, publish subscribe messaging service that provides asynchronous message delivery from publishers to subscribers. While SNS is usually used to send data from a microservice to an end user via a text message or an email, it can also be placed between microservices to decouple their communication. SNS can fan out messages to multiple subscribers, which matched with our desire to get the records from one consumer to multiple instances of the server.
           </p> 
           <p>However, SNS is a more full-featured service that includes features like message filtering and durable storage of messages, which we did not require. SNS also requires some additional code on our server to handle the initial subscription to an SNS topic as well as logic to handle unsubscribing clients as they close the connection to the server. 
           </p>
@@ -1271,21 +1290,25 @@
           <p>We noticed that after a brief period of inactivity, when there were no records streaming, clients would get a CORS 
             error displayed on the browser console, and stopped receiving any records.
           </p>
+          <figure>
+            <img src="assets/media/gifs/cors.gif" class="case-study-image" />
+            <figcaption>CORS Issue in Production</figcaption>
+          </figure>
           <p>Things were fine as long as we were regularly streaming records. But once the records stopped for a brief period
              of time, we’d get a CORS error, and no longer be able to stream even after the records resumed streaming. This was
               happening despite the fact that we had explicitly enabled CORS via the proper headers.
           </p>
-          <p>The issue was that after a period of not receiving any more records, the load balancer would timeout the HTTP 
-            responses, thereby forgetting about the headers that had enabled CORS in the first place. So that’s why we’d get 
-            that CORS error.
+          <p>The issue was that after a period of not receiving any more records, the load balancer would timeout the HTTP responses, thereby forgetting about the headers that had enabled CORS in the first place. So that’s why we’d get that CORS error.
           </p>
           <h4>9.2.3 Solution: Heartbeat</h4>
-          <p>The solution to this production-specific issue dealing with the load balancer was to implement what’s known as a
-             heartbeat or “pulse” for SSE.
+          <p>The solution to this production-specific issue dealing with the load balancer was to implement what’s known as a heartbeat or “pulse” for SSE.
           </p>
+          <figure>
+            <img src="assets/media/gifs/heartbeat.gif" class="case-study-image" />
+            <figcaption>Heartbeat to all clients</figcaption>
+          </figure>
           <p>At a regular interval, about every 30 seconds by default, we send a blank message to all the clients 
-            connected to each server. The client doesn’t see this blank message appear anywhere, which is great, but the 
-            heartbeat is useful for two main reasons.
+            connected to each server. The client doesn’t see this blank message appear anywhere, which is great, but the heartbeat is useful for two main reasons.
           </p>
           <p>First, this checks whether any client has closed the connection since the last time we sent an actual record 
             (and also closes the connection on the server-side if that’s the case). Most importantly for us, this also lets
