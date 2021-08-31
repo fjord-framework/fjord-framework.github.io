@@ -1190,7 +1190,9 @@
           <p>Additionally, all consumer groups should be specified in this file, as an array of objects that each contain the configurations like the name of the Kafka consumer group to which it belongs, and any details necessary to access the Kafka cluster (e.g. Broker IP addresses, security information, etc).
           </p>
           <h3 id="section-8-3">8.3 Deploying Fjord to AWS</h3>
-          [insert cli from slide 49]
+          <figure>
+            <img src="assets/media/gifs/fjordCLI.gif" class="case-study-image" />
+          </figure>
           <p>After you’ve configured `FjordSettings.json`, run `fjord deploy`. This will provision and create more than 40 AWS resources needed for Fjord’s infrastructure and provide you with IP addresses for your NAT Gateways and the Load Balancer URL. If the business user has a firewall for the Kafka cluster, they’ll need to whitelist the IP address of the NAT gateways to ensure the Fjord Consumer is able to access the Kafka cluster.
           </p>
           <h3 id="section-8-4">8.4 Client-side Integration</h3>
