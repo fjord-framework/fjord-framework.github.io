@@ -1324,6 +1324,10 @@
           <p>
             We eventually came across Gatling, which actually had some good docs for testing SSE. Gatling is built on top of Java and Scala, which did entail learning and working with some Scala. We used Gatling to test what load an individual server could handle.
           </p>
+          <figure>
+            <img src="assets/media/images/eightthousandconnections.png" class="case-study-image" />
+            <!-- <figcaption>Heartbeat to all clients</figcaption> -->
+          </figure>
           <p>
             We found that before scaling out, a single server can hold SSE connections for up to 8,500 simultaneous requests. 
             Fjord servers use the minimal CPU and memory offered by AWS as a cost savings measure for the business user, to ensure that spend is limited to how much use the system is seeing, and no more than that. Rather than trying to vertically scale an individual Fjord server that would maintain a larger number of SSE connections, we simply had the AWS autoscaling policy spin up or down new instances as needed.  
