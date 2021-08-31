@@ -640,9 +640,10 @@
             there’s a large community available for support, and many open source libraries available.
           </p>
           <h3 id="section-3-3">3.3 Choosing a Real-time API</h3>
-          
-          [Insert slide 34 graphic]
-
+          <figure>
+            <img src="assets/media/gifs/triangular_pattern.gif" class="case-study-image" />
+            <!-- <figcaption>WebSockets</figcaption> -->
+          </figure>
           <h4>3.3.1 Unidirectional v.s. Bidirectional</h4>
           <p>
             SSE’s unidirectional limitation was not an impediment in our use case. Our goal was always to stream content from Kafka to end users, and not vice versa. For a company like SuperEats, having all customers and drivers be able to send a stream of data back to the company’s Kafka cluster may actually open up a new set of challenges that would require additional security and maintenance. That was an additional challenge not warranted by our use case.
@@ -910,8 +911,10 @@
           <!-- Section 7 -->
           <h2 id="section-7" class="h2">7. Building Fjord</h2>
           <h3 id="section-7-1">7.1 Overview of Triangular Pattern</h3>
-          [insert slide 34 graphic]
-
+          <figure>
+            <img src="assets/media/gifs/triangular_pattern.gif" class="case-study-image" />
+            <!-- <figcaption>WebSockets</figcaption> -->
+          </figure>
           <p>Let’s first look at a high-level view of how an organization like SuperEats would integrate Fjord into their infrastructure.</p>
           
           [insert slide 35 graphic]
