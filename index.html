@@ -716,15 +716,16 @@
           <p>
             At the core of EDAs are events. An event is any significant occurrence or change in state for a distributed system. An event contains both a payload describing the systemic change or action that occurred, as well as a timestamp of when it occurred.
           </p>
-          <figure>
-            <img src="assets/media/images/edaServices.png" class="case-study-image" />
-          </figure>
+          [EVENT json]
 
           <p>Describe the example here</p>
           <p>
             All producers create and send events to the same broker, and then move on with their own business logic process, completely unaware of what happens to the event afterward.
           </p>
-          [expand on above graphic to include inventory, billings, and delivery microservices -- see Venice]
+          <figure>
+            <img src="assets/media/images/edaServices.png" class="case-study-image" />
+          </figure>
+
           <p>
             All consumers that are interested in this particular event can then read it from the broker. For example, the inventory, billings, and delivery services could all react to the same order event. Events are immutable (i.e. they cannot be edited), but they may expire or be deleted.
           </p>
