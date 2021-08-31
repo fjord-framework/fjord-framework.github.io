@@ -1190,14 +1190,18 @@
           <p>Additionally, all consumer groups should be specified in this file, as an array of objects that each contain the configurations like the name of the Kafka consumer group to which it belongs, and any details necessary to access the Kafka cluster (e.g. Broker IP addresses, security information, etc).
           </p>
           <h3 id="section-8-3">8.3 Deploying Fjord to AWS</h3>
-          [insert cli from slide 49]
+          <figure>
+            <img src="assets/media/gifs/fjordCLI.gif" class="case-study-image" />
+          </figure>
           <p>After you’ve configured `FjordSettings.json`, run `fjord deploy`. This will provision and create more than 40 AWS resources needed for Fjord’s infrastructure and provide you with IP addresses for your NAT Gateways and the Load Balancer URL. If the business user has a firewall for the Kafka cluster, they’ll need to whitelist the IP address of the NAT gateways to ensure the Fjord Consumer is able to access the Kafka cluster.
           </p>
           <h3 id="section-8-4">8.4 Client-side Integration</h3>
           <p>
             To interact with Kafka from an HTML page or a mobile application, the business user will need to integrate their client-side code with Fjord. To do this, just a handful of lines of code will need to be added to their existing client-side code.
           </p>
-          [insert client-side code from slide 51]
+          <figure>
+            <img src="assets/media/images/clientSideCode.png" class="case-study-image" />
+          </figure>
           <p>
             The load balancer's URL that was output when Fjord was deployed needs to be used to establish a SSE connection using the EventSource API for browsers or a similar web API for Android or iOS mobile apps. A topic and userId also need to be specified, along with an optional JWT token, if the business user has configured their Fjord infrastructure to use JWTs.
           </p>
@@ -1214,6 +1218,9 @@
           <p>
             With Fjord deployed on ECS with Fargate, Fjord was ready-to-scale. Deciding which aspects should be automatically scaled, and which should be manually scaled, was the first challenge.
           </p>
+          <figure>
+            <img src="assets/media/images/consumerGroups.png" class="case-study-image" />
+          </figure>
           <p>
             Kafka’s smart consumer groups are Kafka’s native mechanism for implementing horizontal scaling. Kafka allows multiple members in the same consumer group to split the workload of reading from the same topic, each member reading from a different partition. Because the business user has the ability to specify any number of members within each consumer group when deploying Fjord, we thought this manual mechanism would allow Fjord to take advantage of Kafka’s native scaling capabilities. We decided that the consumer tasks should therefore not be auto-scaled, as we did not want ECS alarms to conflict with Kafka.
           </p>
