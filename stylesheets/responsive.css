@@ -154,8 +154,16 @@
     background-position: calc(50% / 4) calc(50% + 2rem);
   }
 
-  #start-here div.static-logo-teal-light {
-    background-image: url("../assets/logo/fjord-blue.png");
+  #start-here .static-logo-light-blue {
+    background-image: url("../assets/logo/fjord-light-blue.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 30%;
+    background-position: calc(50% / 4) calc(50% + 2rem);
+  }
+
+  #start-here div.static-logo-yellow {
+    background-image: url("../assets/logo/fjord-yellow.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 30%;
@@ -163,8 +171,8 @@
     display: flex;
   }
 
-  #start-here div.static-logo-pink-light {
-    background-image: url("../assets/logo/fjord-mono-white.png");
+  #start-here div.static-logo-blue {
+    background-image: url("../assets/logo/fjord-blue.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 30%;

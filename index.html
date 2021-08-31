@@ -120,65 +120,69 @@
       </div>
     </header>
 
-    <div id="intro" class="main-section">
-      <div class="h-full">
-        <img src="./assets/logo/logo-name.svg" /><br/>
-        <div>
-        <h2>
-          <span>An open-source framework that provides</span><br /> 
-          a real-time API Proxy for Kafka
-          <!-- <span class="text-blue">real-time </span>
-          <span class="text-pink">API Proxy </span>
-          for <span class="text-teal"> Kafka.</span> -->
-        </h2>
-        </div>
-        
-      </div>
-    </div>
 
     <div id="start-here" class="main-section">
       <div class="h-full">
-        <div class="bg-dark-blue static-logo-color feature">
-          <h2>Client-side Streaming from Kafka in real-time</h2>
-        </div>
-        <div class="bg-dark-blue">
-            <video autoplay loop muted playsinline>
-              <source src="./assets/media/mp4/API-Proxy.mp4" type="video/mp4" />
-              Your browser does not support the HTML5 Video element.
-            </video>
+        <div class="static-logo-color"></div>
+        <div class="">
+          <img
+            class="fjord sm-screen"
+            src="assets/logo/fjord-vertical.png"
+          />
+          <img class="fjord lg-screen" src="assets/logo/fjord-name.png" />
+
+          <p class="light-text">
+            An open-source framework that<br />provides a
+            <span class="text-pink">real-time API Proxy</span> for<br />
+            <span class="text-teal">Kafka</span><br />.
+          </p>
         </div>
       </div>
 
       <div class="h-full">
-        <div class="bg-pink static-logo-teal-light feature">
-          <h2>Scalable infrastructure on AWS within minutes</h2>
+        <div class="bg-dark-blue static-logo-blue feature">
+          <h2>Real-time Streaming from Kafka</h2>
         </div>
-        <div class="bg-pink">
-          <img src="./assets/media/images/aws.png"/><br/>
+        <div class="bg-dark-blue">
+          <h2 class="sm-header">Real-time Streaming from Kafka</h2>
+          <video autoplay loop muted playsinline>
+            <source src="./assets/media/mp4/API-Proxy.mp4" type="video/mp4" />
+            Your browser does not support the HTML5 Video element.
+          </video>
+        </div>
+      </div>
+
+      <div class="h-full">
+        <div class="bg-light-blue static-logo-light-blue feature">
+          <h2>Scalable Infrastructure</h2>
+        </div>
+        <div class="bg-light-blue">
+          <h2 class="sm-header">Scalable Infrastructure</h2>
           <p>
             Use Fjord's CLI to deploy all the infrastructure you'll need
             to Amazon Web Services within minutes.
           </p>
+          <img src="./assets/media/images/aws.png"/><br/>
         </div>
       </div>
       
       <div class="h-full">
-        <div class="bg-blue static-logo-teal-light feature">
+        <div class="bg-dark-blue static-logo-blue feature">
           <h2>Customizable Components</h2>
         </div>
-        <div class="bg-blue">
-          
-          <img class="lazy" data-src="./assets/media/gifs/full_flow.gif"/>
+        <div class="bg-dark-blue">
+          <h2 class="sm-header">Customizable Components</h2>
           <p>
             Fjord's elegant architecture is fully customizable
           </p>
+          <img class="lazy" data-src="./assets/media/gifs/full_flow.gif"/>
         </div>
       </div>
       
     </div>
 
     <aside id="toc">
-      Case Study <br /><br />
+      <!-- Case Study <br /><br /> -->
       <ul>
         <!-- Section 1 -->
         <li data-section="section-1" class="selected">
@@ -554,7 +558,7 @@
           </p>
           <figure>
             <img src="assets/media/gifs/Events.gif" class="case-study-image" />
-            <figcaption>Real-time Updates</figcaption>
+            <!-- <figcaption>Real-time Updates</figcaption> -->
           </figure>
           <p>SuperEats works with thousands of restaurants, from well-known multinational chains like Chipotle to small hole-in-the-wall shops 
             like Cousin Vinny’s Hot Dogs. Customers place an order from their favorite restaurant, which then comes into SuperEats’ Kafka cluster.</p>
@@ -565,7 +569,7 @@
           </p>
           <figure>
             <img src="assets/media/gifs/end_users_superEats.gif" class="case-study-image" />
-            <figcaption>SuperEats clients and infrastructure</figcaption>
+            <!-- <figcaption>SuperEats clients and infrastructure</figcaption> -->
           </figure>
           <p>
             To accomplish this, SuperEats needs a real-time infrastructure that is secure, easy to deploy and use, and takes advantage of their existing infrastructure.
@@ -604,7 +608,7 @@
             <blockquote>
               <p>Real-time is the ability to react to anything that occurs as it occurs, before it loses its importance.</p>
             </blockquote>
-            <figcaption>-Ably<cite></cite></figcaption>
+            <!-- <figcaption>-Ably<cite></cite></figcaption> -->
           </figure>
           <p>
             This definition further illustrates the main idea here: within the context of web applications, the goal of real-time streaming is 
@@ -626,7 +630,7 @@
           </p>
           <figure>
             <img src="assets/media/gifs/polling.gif" class="case-study-image" />
-            <figcaption>Long-Polling</figcaption>
+            <!-- <figcaption>Long-Polling</figcaption> -->
           </figure>
           <p>
             This is great in situations when the rate of new message production is not high. For example, the current outdoor temperature usually 
@@ -658,7 +662,7 @@
           </p>
           <figure>
             <img src="assets/media/gifs/sse.gif" class="case-study-image" />
-            <figcaption>Server-Sent Events</figcaption>
+            <!-- <figcaption>Server-Sent Events</figcaption> -->
           </figure>
           <p>
             Just like long polling, SSE is unidirectional. The data is only streaming from the server to the client, and not vice versa.
@@ -678,7 +682,7 @@
           </p>
           <figure>
             <img src="assets/media/gifs/ws.gif" class="case-study-image" />
-            <figcaption>WebSockets</figcaption>
+            <!-- <figcaption>WebSockets</figcaption> -->
           </figure>
           <p>
             The client first sends a normal HTTP request, but this request contains headers that ask the connection to be upgraded to a WebSocket 
@@ -727,8 +731,8 @@
             spending more time around configurations.
           </p>
           <figure>
-            <img src="assets/media/images/WS vs SSE Dark.svg" class="case-study-image" />
-            <figcaption>WebSockets vs SSE</figcaption>
+            <img src="assets/media/images/WS vs SSE reworked.svg" class="case-study-image" />
+            <!-- <figcaption>WebSockets vs SSE</figcaption> -->
           </figure>
           <p>
             For all these reasons, we used SSE to stream records from our server to clients. Next, let’s understand why we decided to specifically 
@@ -779,7 +783,7 @@
           </p>
           <figure>
             <img src="assets/media/gifs/deathstar.gif" class="case-study-image" />
-            <figcaption>Microservices Death Star</figcaption>
+            <!-- <figcaption>Microservices Death Star</figcaption> -->
           </figure>
           <p>
             This can quickly get out of hand, leading to what is known as the microservices death star.
@@ -794,7 +798,7 @@
           </p>
           <figure>
             <img src="assets/media/gifs/producer_consumer.gif" class="case-study-image" />
-            <figcaption>Event-Driven Architecture</figcaption>
+            <!-- <figcaption>Event-Driven Architecture</figcaption> -->
           </figure>
           <p>
             By adding a broker in between the microservices that generate events (“producers”) and the microservices that receive events (“consumers”), 
@@ -886,7 +890,7 @@
           </p>
           <figure>
             <img src="assets/media/gifs/kafka.gif" class="case-study-image" />
-            <figcaption>Event Streaming</figcaption>
+            <!-- <figcaption>Event Streaming</figcaption> -->
           </figure>
           <p>
             This finally leads us to our next point, the gold standard in event-streaming platforms: Apache Kafka.
@@ -939,7 +943,7 @@
           </p>
           <figure>
             <img src="assets/media/gifs/api proxy.gif" class="case-study-image" />
-            <figcaption>An API Proxy</figcaption>
+            <!-- <figcaption>An API Proxy</figcaption> -->
           </figure>
           <p>
             With an API proxy, end-users can send HTTP requests to the API proxy. The API proxy would  sit between Kafka and the internet-facing
@@ -1110,26 +1114,26 @@
           </p>
           <figure>
             <img src="assets/media/gifs/decoupling 1.gif" class="case-study-image" />
-            <figcaption>Consumer making HTTP Post request to One Server</figcaption>
+            <!-- <figcaption>Consumer making HTTP Post request to One Server</figcaption> -->
           </figure>
           <p>But the whole point of using ECS is to be able to scale, and have multiple servers as needed to handle more load. With the current setup, any newly deployed server would not receive records from the consumer.
           </p>
           <figure>
             <img src="assets/media/gifs/decoupling 2.gif" class="case-study-image" />
-            <figcaption>Newly deployed Server Not Receiving Messages</figcaption>
+            <!-- <figcaption>Newly deployed Server Not Receiving Messages</figcaption> -->
           </figure>
           <p>One approach could be to somehow have the consumer be aware of every newly deployed server, and then make a separate POST request to every server, for every received record from Kafka. 
           </p>
           <figure>
             <img src="assets/media/gifs/decoupling 3.gif" class="case-study-image" />
-            <figcaption>Consumer With Routing Table</figcaption>
+            <!-- <figcaption>Consumer With Routing Table</figcaption> -->
           </figure>
           <p>But this approach would put a lot of strain and pressure on the consumer, which is already working hard to keep up with the stream of records coming from Kafka.</p>
           <p>The solution we chose was to decouple the consumer from the server by using a middleware that would provide a publish-subscribe mechanism.
           </p>
           <figure>
             <img src="assets/media/gifs/decoupling 4.gif" class="case-study-image" />
-            <figcaption>Middleware in between consumer and server</figcaption>
+            <!-- <figcaption>Middleware in between consumer and server</figcaption> -->
           </figure>
           <p>We looked at a few different options for this middleware.</p>
           [graphic on comparison chart]
@@ -1290,7 +1294,7 @@
           </p>
           <figure>
             <img src="assets/media/gifs/cors.gif" class="case-study-image" />
-            <figcaption>CORS Issue in Production</figcaption>
+            <!-- <figcaption>CORS Issue in Production</figcaption> -->
           </figure>
           <p>Things were fine as long as we were regularly streaming records. But once the records stopped for a brief period of time, we’d get a CORS error, and no longer be able to stream even after the records resumed streaming. 
              This was happening despite the fact that we had explicitly enabled CORS via the proper headers.
@@ -1303,7 +1307,7 @@
           </p>
           <figure>
             <img src="assets/media/gifs/heartbeat.gif" class="case-study-image" />
-            <figcaption>Heartbeat to all clients</figcaption>
+            <!-- <figcaption>Heartbeat to all clients</figcaption> -->
           </figure>
           <p>At a regular interval, about every 30 seconds by default, we send a blank message to all the clients connected to each server. 
             The client doesn’t see this blank message appear anywhere, which is great, but the heartbeat is useful for two main reasons.
