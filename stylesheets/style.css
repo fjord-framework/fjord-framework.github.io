@@ -1,4 +1,4 @@
-@font-face {
+bg-dark-blue@font-face {
   font-family: "Poppins";
   src: url("fonts/Poppins-Regular.ttf") format("tff");
 }
@@ -228,15 +228,14 @@ body {
   display: block;
 }
 
-.mobile-menu-open #mobile-open {
+.mobile-menu-open #mobile-open { 
   display: none;
 }
 
+/* Photo courtesy of Davide Cantelli, Unsplash 
 
-/* Intro */
 #intro div.h-full {
   background-image: url(../assets/logo/fjord-photo.jpg);
-  /* Photo courtesy of Davide Cantelli, Unsplash */
   background-repeat: no-repeat;
   background-size: cover;
   
@@ -264,7 +263,8 @@ body {
   opacity: .70;
   font-style: italic;
   backdrop-filter: blur(3px);
-}
+} 
+*/
 
 
 /* TOC */
@@ -585,14 +585,15 @@ body {
   background-attachment: fixed;
   background-size: 25%;
   background-position: 50% calc(50% / 3 + 4rem);
-  
 }
 
-#start-here div.static-logo-teal-light {
-  display: none;
+#start-here div.static-logo-light-blue {
+  background-image: url(../assets/logo/fjord-light-blue.png);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
-#start-here div.static-logo-pink-light {
+#start-here div.static-logo-blue {
   display: none;
 }
 
@@ -635,19 +636,23 @@ body {
   font-weight: 500;
 }
 
-#start-here .feature {
-  padding: 10%;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-
-
 #start-here h2 {
   font-size: 2rem;
   font-weight: 800;
   line-height: 3rem;
   color: white;
+}
+
+#start-here .bg-dark-blue {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+#start-here .bg-light-blue {
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 #start-here h2.sm-header {
