@@ -1218,6 +1218,9 @@
           <p>
             With Fjord deployed on ECS with Fargate, Fjord was ready-to-scale. Deciding which aspects should be automatically scaled, and which should be manually scaled, was the first challenge.
           </p>
+          <figure>
+            <img src="assets/media/images/consumerGroups.png" class="case-study-image" />
+          </figure>
           <p>
             Kafka’s smart consumer groups are Kafka’s native mechanism for implementing horizontal scaling. Kafka allows multiple members in the same consumer group to split the workload of reading from the same topic, each member reading from a different partition. Because the business user has the ability to specify any number of members within each consumer group when deploying Fjord, we thought this manual mechanism would allow Fjord to take advantage of Kafka’s native scaling capabilities. We decided that the consumer tasks should therefore not be auto-scaled, as we did not want ECS alarms to conflict with Kafka.
           </p>
