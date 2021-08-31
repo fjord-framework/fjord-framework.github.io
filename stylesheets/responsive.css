@@ -154,12 +154,13 @@
     background-position: calc(50% / 4) calc(50% + 2rem);
   }
 
-  #start-here .static-logo-light-blue {
+  #start-here div.static-logo-light-blue {
     background-image: url("../assets/logo/fjord-light-blue.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 30%;
     background-position: calc(50% / 4) calc(50% + 2rem);
+    display: flex;
   }
 
   #start-here div.static-logo-yellow {
