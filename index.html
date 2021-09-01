@@ -565,7 +565,6 @@
 
           <figure>
             <img src="assets/media/gifs/supereats_responds.gif" class="case-study-image" />
-            <!-- <figcaption>WebSockets</figcaption> -->
           </figure>
          
           <!-- Section 3 -->
@@ -619,7 +618,6 @@
           </p>
           <figure>
             <img src="assets/media/gifs/sse.gif" class="case-study-image" />
-            <!-- <figcaption>Server-Sent Events</figcaption> -->
           </figure>
           <p>
             Just like long polling, SSE is <strong>unidirectional</strong>. The data is only streaming from the server to the client, and not vice versa.
@@ -636,7 +634,6 @@
           </p>
           <figure>
             <img src="assets/media/gifs/ws.gif" class="case-study-image" />
-            <!-- <figcaption>WebSockets</figcaption> -->
           </figure>
           <p>
             The client first sends a normal HTTP request, but this request contains headers that ask the connection to be upgraded to a WebSocket connection. The server then sends a response that opens the bidirectional communication line over the WebSockets protocol.
@@ -647,7 +644,6 @@
           <h3 id="section-3-3">3.3 Choosing a Real-time API</h3>
           <figure>
             <img src="assets/media/gifs/triangular_pattern.gif" class="case-study-image" />
-            <!-- <figcaption>WebSockets</figcaption> -->
           </figure>
           <h4>3.3.1 Unidirectional v.s. Bidirectional</h4>
           <p>
@@ -724,7 +720,6 @@
           
           <figure>
             <img src="assets/media/images/json.png" class="case-study-image" />
-            <!-- <figcaption>Event-Driven Architecture</figcaption> -->
           </figure>
 
           <p>
@@ -855,7 +850,6 @@
           </p>
           <figure>
             <img src="assets/media/gifs/transport_protocol.gif" class="case-study-image" />
-            <!-- <figcaption>An API Proxy</figcaption> -->
           </figure>
           <p>
             However, internet facing end users use their mobile phones, laptops, tablets and desktops and use the HTTP/S protocol. 
@@ -867,7 +861,6 @@
           </p>
           <figure>
             <img src="assets/media/gifs/api proxy.gif" class="case-study-image" />
-            <!-- <figcaption>An API Proxy</figcaption> -->
           </figure>
           <p>
             By positioning an API proxy between Kafka and the web, the API proxy can pull data from Kafka over Kafka’s binary protocol, and can push that data to connected devices over the internet via the HTTP protocol.
@@ -909,7 +902,6 @@
           </p>
         <figure>
           <img src="assets/media/images/existingSolutions.png" class="case-study-image" />
-          <!-- <figcaption>An API Proxy</figcaption> -->
         </figure>
           <p>
             Ably, PubNub and MigratoryData offer specialized services for Kafka. All of these companies offer feature-rich, highly scalable solutions. The main downside of these services is that you pay a high price for the convenience and ease of use, and you’re locked into their ecosystems.
@@ -920,7 +912,6 @@
           </p>
           <figure>
             <img src="assets/media/images/DIY.png" class="case-study-image" />
-            <!-- <figcaption>An API Proxy</figcaption> -->
           </figure>
           <p>The downside to this approach is the time, energy and expertise it requires to connect everything together. Installing and connecting all the different components is a challenge in itself, not to mention deploying and maintaining this infrastructure.
           </p>
@@ -957,7 +948,6 @@
           
           <figure>
             <img src="assets/media/gifs/triangular_pattern.gif" class="case-study-image" />
-            <!-- <figcaption>WebSockets</figcaption> -->
           </figure>
 
           <p>
@@ -974,7 +964,6 @@
 
           <figure>
             <img src="assets/media/gifs/supereats_responds_sse.gif" class="case-study-image" />
-            <!-- <figcaption>WebSockets</figcaption> -->
           </figure>
 
           <p>
@@ -983,7 +972,6 @@
 
           <figure>
             <img src="assets/media/gifs/pull_and_deliver.gif" class="case-study-image" />
-            <!-- <figcaption>WebSockets</figcaption> -->
           </figure>
 
           <p>
@@ -1075,14 +1063,12 @@
           </p>
           <figure>
             <img src="assets/media/images/dockerizedConsumerServer.png" class="case-study-image" />
-            <!-- <figcaption>Newly deployed Server Not Receiving Messages</figcaption> -->
           </figure>
           <p>
             AWS ECS offers two launch types--EC2 and Fargate.
           </p>
           <figure>
             <img src="assets/media/images/ecsDockerized.png" class="case-study-image" />
-            <!-- <figcaption>Newly deployed Server Not Receiving Messages</figcaption> -->
           </figure>
 
           <p>
@@ -1099,21 +1085,18 @@
           </p>
           <figure>
             <img src="assets/media/gifs/decoupling 1.gif" class="case-study-image" />
-            <!-- <figcaption>Consumer making HTTP Post request to One Server</figcaption> -->
           </figure>
           <p>
             But the whole point of using ECS is to be able to scale, and have multiple servers as needed to handle more load. With the current setup, any newly deployed server would not receive records from the consumer.
           </p>
           <figure>
             <img src="assets/media/gifs/decoupling 2.gif" class="case-study-image" />
-            <!-- <figcaption>Newly deployed Server Not Receiving Messages</figcaption> -->
           </figure>
           <p>
             One approach could be to somehow have the consumer be aware of every newly deployed server, and then make a separate POST request to every server, for every received record from Kafka. 
           </p>
           <figure>
             <img src="assets/media/gifs/decoupling 3.gif" class="case-study-image" />
-            <!-- <figcaption>Consumer With Routing Table</figcaption> -->
           </figure>
           <p>
             But this approach would put a lot of strain and pressure on the consumer, which is already working hard to keep up with the stream of records coming from Kafka.
@@ -1123,7 +1106,6 @@
           </p>
           <figure>
             <img src="assets/media/gifs/decoupling 4.gif" class="case-study-image" />
-            <!-- <figcaption>Middleware in between consumer and server</figcaption> -->
           </figure>
           <p>
             We looked at a few different options for this middleware, including SNS and Redis.
@@ -1133,7 +1115,6 @@
 
           <figure>
             <img src="assets/media/images/sns vs redis.png" class="case-study-image" />
-            <!-- <figcaption>Middleware in between consumer and server</figcaption> -->
           </figure>
 
           <p>
@@ -1159,7 +1140,6 @@
 
           <figure>
             <img src="assets/media/images/aws_console.png" class="case-study-image" />
-            <!-- <figcaption>Middleware in between consumer and server</figcaption> -->
           </figure>
 
           <p>
@@ -1328,7 +1308,6 @@
           </p>
           <figure>
             <img src="assets/media/gifs/cors.gif" class="case-study-image" />
-            <!-- <figcaption>CORS Issue in Production</figcaption> -->
           </figure>
           <p>
             Things were fine as long as we were regularly streaming records. But once the records stopped for a brief period of time, we’d get a CORS error, and no longer be able to stream even after the records resumed streaming. This was happening despite the fact that we had explicitly enabled CORS via the proper headers.
@@ -1343,7 +1322,6 @@
           </p>
           <figure>
             <img src="assets/media/gifs/heartbeat.gif" class="case-study-image" />
-            <!-- <figcaption>Heartbeat to all clients</figcaption> -->
           </figure>
           <p>
             At a regular interval, about every 30 seconds by default, we send a blank message to all the clients connected to each server. The client doesn’t see this blank message appear anywhere, which is great, but the heartbeat is useful for two main reasons.
@@ -1368,14 +1346,12 @@
           </p>
           <figure>
             <img src="assets/media/images/testingSSE.png" class="case-study-image" />
-            <!-- <figcaption>Heartbeat to all clients</figcaption> -->
           </figure>
           <p>
             We eventually came across Gatling, which actually had some good docs for testing SSE. Gatling is built on top of Java and Scala, which did entail learning and working with some Scala. We used Gatling to test what load an individual server could handle.
           </p>
           <figure>
             <img src="assets/media/images/8000_connections.png" class="case-study-image" />
-            <!-- <figcaption>Heartbeat to all clients</figcaption> -->
           </figure>
           <p>
             We found that before scaling out, a single server can hold SSE connections for up to 8,500 simultaneous requests. 
