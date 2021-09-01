@@ -41,7 +41,11 @@ body {
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   height: 100%;
   background-color: white;
-  
+}
+
+.code-snippet {
+  background-color:  rgba(0, 189, 170, 0.2);
+  padding: 0 4px;
 }
 
 *,
@@ -688,3 +692,4 @@ li {
   color: #334252;
   text-align: center;
 }
+

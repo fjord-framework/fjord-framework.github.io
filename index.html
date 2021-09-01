@@ -1201,7 +1201,7 @@
           <h3 id="section-8-1">8.1 The Fjord CLI</h3>
           
           <p>
-            To deploy Fjord, it’s necessary to globally install the `fjord-cli` npm package, which provides a thin 
+            To deploy Fjord, it’s necessary to globally install the <strong class="code-snippet">jord-cli</strong> npm package, which provides a thin 
             wrapper over the AWS CDK with a few simple Fjord commands.
           </p>
           <figure>
@@ -1216,7 +1216,7 @@
             <img src="assets/media/images/fjordSetup.png" class="case-study-image" />
           </figure>
           <p>
-            In your directory, use the command `fjord setup`. This will generate a `FjordSettings.json` file:
+            In your directory, use the command <strong class="code-snippet">fjord setup</strong>. This will generate a <strong class="code-snippet">FjordSettings.json</strong>
           </p>
           <figure>
             <img src="assets/media/images/FjordSettings.png" class="case-study-image" />
@@ -1232,7 +1232,7 @@
           <figure>
             <img src="assets/media/gifs/fjordCLI.gif" class="case-study-image" />
           </figure>
-          <p>After you’ve configured `FjordSettings.json`, run `fjord deploy`. This will provision and create more than 40 AWS resources needed for Fjord’s infrastructure and provide you with IP addresses for your NAT Gateways and the Load Balancer URL. If the business user has a firewall for the Kafka cluster, they’ll need to whitelist the IP address of the NAT gateways to ensure the Fjord Consumer is able to access the Kafka cluster.
+          <p>After you’ve configured <strong class="code-snippet"> FjordSettings.json</strong>, run <strong class="code-snippet">fjord deploy</strong>. This will provision and create more than 40 AWS resources needed for Fjord’s infrastructure and provide you with IP addresses for your NAT Gateways and the Load Balancer URL. If the business user has a firewall for the Kafka cluster, they’ll need to whitelist the IP address of the NAT gateways to ensure the Fjord Consumer is able to access the Kafka cluster.
           </p>
           <h3 id="section-8-4">8.4 Client-side Integration</h3>
           <p>
@@ -1245,7 +1245,7 @@
             The load balancer's URL that was output when Fjord was deployed needs to be used to establish a SSE connection using the EventSource API for browsers or a similar web API for Android or iOS mobile apps. A topic and userId also need to be specified, along with an optional JWT token, if the business user has configured their Fjord infrastructure to use JWTs.
           </p>
           <p>
-            Finally, the front end developer can write the body of a callback function passed to the `onmessage` method, which will be executed each time a new record is received by Fjord.
+            Finally, the front end developer can write the body of a callback function passed to the <strong class="code-snippet">onmessage</strong>  method, which will be executed each time a new record is received by Fjord.
           </p>
           <p>
             Each incoming record should be parsed from a text to a simple JavaScript object, which can then be incorporated into the page however the front end developer wants--whether as an additional row in a table, a data point on a graph, etc.
