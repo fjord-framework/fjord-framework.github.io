@@ -283,7 +283,7 @@
           <a href="#section-4-3">
             <div>
               <div class="bullet"><div></div></div>
-              <p>Kafka and Real-time</p>
+              <p>Kafka, Real-time, and SuperEats</p>
             </div>
           </a>
         </li>
@@ -815,7 +815,7 @@
             <img src="assets/media/images/brandsUsingKafka.png" class="case-study-image" />
           </figure>
 
-          <h3 id="section-4-3">4.3 Kafka and Real-time</h3>
+          <h3 id="section-4-3">4.3 Kafka, Real-time, and SuperEats</h3>
           <p>
             A company like SuperEats can use Kafka to set up an infrastructure that can scale as the business grows, without worrying about performance issues down the line.
           </p>
@@ -823,9 +823,27 @@
             <img src="assets/media/gifs/supereats.gif" class="case-study-image" />
           </figure>
           <p>
-            Kafka’s high throughput capacity makes it an ideal candidate to serve real-time events to end users. In the next section, we’ll dive deeper into why you need an API proxy if you want to allow clients to stream from a Kafka cluster.
+            Kafka’s high throughput capacity makes it an ideal candidate to serve real-time events to end users. Kafka is also able to segregate streams of data into any number of topics, which themselves are further divided into multiple partitions. Each partition can have replicas on different brokers, which ensures redundancy in case a broker fails.
           </p>
-          [Add MORE CONTENT]
+          <p>
+            Kafka provides yet another useful component not found in all event streaming platforms--a <strong>key</strong>. Kafka records have both a payload and a timestamp just like typical EDA events do. However, the payload of a Kafka record is itself comprised of two components:  a key and a value. The record <strong>value</strong> holds the actual business data. But the record <strong>key</strong> can be a very useful tool to not only further segregate data, but to also ensure in-order delivery.
+          </p>
+          <p>
+            SuperEats needs a way to segregate data streams by activity type (e.g. incoming order v.s. Driver GPS position), by restaurant, and by customer or driver. For example, SuperEats could have one topic be <span class="code-snippet">orders</span>, and another topic be <span class="code-snippet">driver GPS</span> information. 
+          </p>
+          <p>
+            Within the <span class="code-snippet">order</span> topic, the <strong>key</strong> of all records should probably be some type of concatenation of three components: the restaurant, the customer’s, and the order’s unique identifiers. Because Kafka stores all records of the same key on the same partition, this would ensure that all the information related to order 2235407 for Jane4022354 from restaurant 72544986 would be stored on the same partition, and read in-order.
+          </p>
+          <p>
+            The <span class="code-snippet">order</span> topic’s record <strong>value</strong> would itself contain information regarding the status of the order, the contents of the order, etc.
+          </p>
+          <p>
+            Within the <span class="code-snippet">driver GPS</span> topic, the <strong>key</strong> would probably be the driver’s unique identifier. The <strong>value</strong> would contain the actual GPS data.
+          </p>
+        
+          <p>
+            In the next section, we’ll dive deeper into why you need an API proxy if you want to allow clients to stream from a Kafka cluster.
+          </p>
 
           <!-- Section 5 -->
           <h2 id="section-5" class="h2">5. Why need an API Proxy for Kafka?</h2>
