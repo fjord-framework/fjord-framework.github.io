@@ -832,7 +832,7 @@
             SuperEats needs a way to segregate data streams by activity type (e.g. incoming order v.s. Driver GPS position), by restaurant, and by customer or driver. For example, SuperEats could have one topic be <span class="code-snippet">orders</span>, and another topic be <span class="code-snippet">driver GPS</span> information. 
           </p>
           <p>
-            Within the <span class="code-snippet">order</span> topic, the <strong>key</strong> of all records should probably be some type of concatenation of three components: the restaurant, the customer’s, and the order’s unique identifiers. Because Kafka stores all records of the same key on the same partition, this would ensure that all the information related to order 2235407 for Jane4022354 from restaurant 72544986 would be stored on the same partition, and read in-order.
+            Within the <span class="code-snippet">order</span> topic, the <strong>key</strong> of all records should probably be some type of concatenation of three components: the restaurant's, the customer’s, and the order’s unique identifiers. Because Kafka stores all records of the same key on the same partition, this would ensure that all the information related to order 2235407 for Jane4022354 from restaurant 72544986 would be stored on the same partition, and read in-order.
           </p>
           <p>
             The <span class="code-snippet">order</span> topic’s record <strong>value</strong> would itself contain information regarding the status of the order, the contents of the order, etc.
