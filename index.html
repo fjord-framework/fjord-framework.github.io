@@ -660,8 +660,9 @@
           <p>
             By default, SSE’s EventSource WebAPI automatically tries to reconnect the client to the server every time the client gets disconnected from the server. Because our use case involved streaming to drivers on mobile devices that may need to switch cell phone towers when driving across town, this seemed like a useful feature.
           </p>
-          [create a new diagram to show client connected to one server via a load balancer, and then reconnecting to a different server]
-          <p>
+          <figure>
+            <img src="assets/media/gifs/sse_autoreconnect.gif" class="case-study-image" />
+          </figure>          <p>
             The auto-reconnect feature also proved useful for auto-scaling purposes. Because, as we’ll explore later, the URL that clients are connected to is actually that of a load balancer, this meant that whenever a server has either crashed or needs to be shut down because of low activity, all of the clients currently receiving data from that server would automatically be reconnected to another existing server. 
             There was no need for us to configure any additional logic to handle that.
           </p>
