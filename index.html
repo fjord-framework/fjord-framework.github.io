@@ -1204,8 +1204,8 @@
           <h3 id="section-8-1">8.1 The Fjord CLI</h3>
           
           <p>
-            To deploy Fjord, it’s necessary to globally install the <strong class="code-snippet">jord-cli</strong> npm package, which provides a thin 
-            wrapper over the AWS CDK with a few simple Fjord commands.
+            To deploy Fjord, it’s necessary to globally install the <span class="code-snippet">fjord-cli</span> npm package, which provides a thin 
+            wrapper over the AWS CDK with a few simple commands.
           </p>
           <figure>
             <img src="assets/media/images/npmInstall.png" class="case-study-image" />
@@ -1219,15 +1219,13 @@
             <img src="assets/media/images/fjordSetup.png" class="case-study-image" />
           </figure>
           <p>
-            In your directory, use the command <strong class="code-snippet">fjord setup</strong>. This will generate a <strong class="code-snippet">FjordSettings.json</strong>
+            In your directory, use the command <span class="code-snippet">fjord setup</span>. This will generate a <span class="code-snippet">FjordSettings.json</span> file.
           </p>
           <figure>
             <img src="assets/media/images/FjordSettings.png" class="case-study-image" />
           </figure>
           <p>
-            This is where the business user’s configuration details live. This includes the name of your application, 
-            an optional JWT private key, the names of the Kafka topics you wish to pull records from, and the names of 
-            the topics you want to expose in client side code.
+            This is where the business user’s configuration details live. This includes the name of your application, an optional JWT private key, the names of the Kafka topics you wish to pull records from, and the names of the topics you want to expose in client side code.
           </p>
           <p>Additionally, all consumer groups should be specified in this file, as an array of objects that each contain the configurations like the name of the Kafka consumer group to which it belongs, and any details necessary to access the Kafka cluster (e.g. Broker IP addresses, security information, etc).
           </p>
@@ -1235,7 +1233,9 @@
           <figure>
             <img src="assets/media/gifs/fjordCLI.gif" class="case-study-image" />
           </figure>
-          <p>After you’ve configured <strong class="code-snippet"> FjordSettings.json</strong>, run <strong class="code-snippet">fjord deploy</strong>. This will provision and create more than 40 AWS resources needed for Fjord’s infrastructure and provide you with IP addresses for your NAT Gateways and the Load Balancer URL. If the business user has a firewall for the Kafka cluster, they’ll need to whitelist the IP address of the NAT gateways to ensure the Fjord Consumer is able to access the Kafka cluster.
+          <p>After you’ve edited the settings file, run <span class="code-snippet">fjord deploy</span>. This will provision and create more than 40 AWS resources needed for Fjord’s infrastructure and provide you with IP addresses for your NAT Gateways and the Load Balancer URL.
+          </p>
+          <p>If the business user has a firewall for the Kafka cluster, they’ll need to whitelist the IP address of the NAT gateways to ensure the Fjord Consumer is able to access the Kafka cluster.
           </p>
           <h3 id="section-8-4">8.4 Client-side Integration</h3>
           <p>
@@ -1248,7 +1248,7 @@
             The load balancer's URL that was output when Fjord was deployed needs to be used to establish a SSE connection using the EventSource API for browsers or a similar web API for Android or iOS mobile apps. A topic and userId also need to be specified, along with an optional JWT token, if the business user has configured their Fjord infrastructure to use JWTs.
           </p>
           <p>
-            Finally, the front end developer can write the body of a callback function passed to the <strong class="code-snippet">onmessage</strong>  method, which will be executed each time a new record is received by Fjord.
+            Finally, the front end developer can write the body of a callback function passed to the <span class="code-snippet">onmessage</span>  method, which will be executed each time a new record is received by Fjord.
           </p>
           <p>
             Each incoming record should be parsed from a text to a simple JavaScript object, which can then be incorporated into the page however the front end developer wants--whether as an additional row in a table, a data point on a graph, etc.
