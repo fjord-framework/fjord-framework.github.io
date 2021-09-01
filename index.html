@@ -537,8 +537,8 @@
           </p>
           <p>We see our target user as an organization that:</p>
           <ol>
-            <li>Is large enough to already use Kafka for some aspect of their infrastructure,</li>
-            <li>Wants to expose some stream of data (i.e. from a Kafka topic) in real-time to their employees, customers, suppliers, or any other type of stakeholder, including the public at large--or any combination of these.</li>
+            <li>Is <strong>large enough</strong> to already use Kafka for some aspect of their infrastructure,</li>
+            <li>Wants to <strong>expose some stream of data</strong> (i.e. from a Kafka topic) in real-time to their employees, customers, suppliers, or any other type of stakeholder, including the public at large--or any combination of these.</li>
           </ol>
           <p>
             Of course, this organization is cost-conscious and wants the most efficient and easy way to deploy the infrastructure needed to solve this problem, while still managing, owning, and closely handling all the data themselves.
@@ -598,7 +598,7 @@
 
           <h4>3.2.1  Long polling</h4>
           <p>
-            With long polling, the client sends an initial HTTP request to the server, and the server then waits until there’s a new piece of data to send back. Once the server gets a new update, it sends a response and immediately closes the request. The client must then send yet a new request to receive another update from the server.
+            With long polling, the client sends an initial HTTP request to the server, and the server then waits until there’s a new piece of data to send back. Once the server gets a new update, it sends a response and immediately closes the request. The client must then send yet a <strong>new</strong> request to receive another update from the server.
           </p>
           <figure>
             <img src="assets/media/gifs/polling.gif" class="case-study-image" />
@@ -615,16 +615,14 @@
             SSE (also known as EventSource) is a web API that enables a client to receive a continuous stream of data from a server.
           </p>
           <p>
-            The client sends an HTTP request through the EventSource WebAPI, which lets the server know this request is for a stream of data. 
-            The server then returns a never-ending HTTP response whose headers indicate that the connection will be ongoing until explicitly closed. 
-            At the same time, the server starts to send any data received, all in the same HTTP response.
+            The client sends an HTTP request through the EventSource WebAPI, which lets the server know this request is for a stream of data. The server then returns a never-ending HTTP response whose headers indicate that the connection will be ongoing until explicitly closed. At the same time, the server starts to send any data received, all in <strong>the same HTTP response</strong>.
           </p>
           <figure>
             <img src="assets/media/gifs/sse.gif" class="case-study-image" />
             <!-- <figcaption>Server-Sent Events</figcaption> -->
           </figure>
           <p>
-            Just like long polling, SSE is unidirectional. The data is only streaming from the server to the client, and not vice versa.
+            Just like long polling, SSE is <strong>unidirectional</strong>. The data is only streaming from the server to the client, and not vice versa.
           </p>
           <p>
             However, the SSE approach is much more efficient than long polling, as there’s no longer the need to continuously open and close HTTP responses for every message. All data is being transmitted through one never ending HTTP response.
@@ -634,7 +632,7 @@
           </p>
           <h4>3.2.3 WebSockets</h4>
           <p>
-            WebSockets is a protocol that allows a client and a server to repeatedly exchange data through a single TCP connection. This bidirectional protocol means that both the client and the server can send data to each other as long as the WebSocket connection remains open.
+            WebSockets is a protocol that allows a client and a server to repeatedly exchange data through a single TCP connection. This <strong>bidirectional</strong> protocol means that both the client and the server can send data to each other as long as the WebSocket connection remains open.
           </p>
           <figure>
             <img src="assets/media/gifs/ws.gif" class="case-study-image" />
@@ -644,8 +642,7 @@
             The client first sends a normal HTTP request, but this request contains headers that ask the connection to be upgraded to a WebSocket connection. The server then sends a response that opens the bidirectional communication line over the WebSockets protocol.
           </p>
           <p>
-            WebSockets are great in situations where both the server and the client need to frequently send data to each other, such as in online gaming and chat room applications. WebSockets are also seen as the de facto technology for real-time communication, which means that 
-            there’s a large community available for support, and many open source libraries available.
+            WebSockets are great in situations where both the server and the client need to frequently send data to each other, such as in online gaming and chat room applications. WebSockets are also seen as the de facto technology for real-time communication, which means that there’s a large community available for support, and many open source libraries available.
           </p>
           <h3 id="section-3-3">3.3 Choosing a Real-time API</h3>
           <figure>
@@ -731,7 +728,7 @@
           </figure>
 
           <p>
-            All producers create and send events to the same broker, and then move on with their own business logic process, completely unaware of what happens to the event afterward.
+            Producers create and send events to the same broker, and then move on with their own business logic process, completely unaware of what happens to the event afterward.
           </p>
           <figure>
             <img src="assets/media/images/edaServices.png" class="case-study-image" />
@@ -809,10 +806,13 @@
             The technology was created at LinkedIn out of a need to track vast numbers of site events like page views and user actions, as well as to aggregate large quantities of logs from disparate sources within its distributed architecture. It later became an open source project of the Apache Foundation in 2011.
           </p>
           <p>
-            Kafka was designed to be used to manage machine to machine communication. Kafka’s custom binary protocol over TCP is built to take advantage of advanced TCP features (e.g., the ability to multiplex requests and the ability to simultaneously poll any connections). Kafka is optimized to handle extremely high throughput of messages. Back in 2019, LinkedIn was already processing 7 trillion messages per day on their Kafka clusters. This is probably much higher today.
+            Kafka was designed to be used to manage machine to machine communication. Kafka’s custom <strong>binary protocol</strong> over TCP is built to take advantage of advanced TCP features (e.g., the ability to multiplex requests and the ability to simultaneously poll any connections). 
           </p>
           <p>
-            Today, over 80% of all Fortune 100 companies use Kafka.
+            Kafka is optimized to handle extremely high throughput of messages. Back in 2019, LinkedIn was already processing <strong>7 trillion</strong> messages per day on their Kafka clusters. This is probably much higher today.
+          </p>
+          <p>
+            Today, over <strong>80% of all Fortune 100</strong> companies use Kafka.
           </p>
           <figure>
             <img src="assets/media/images/brandsUsingKafka.png" class="case-study-image" />
@@ -860,7 +860,7 @@
           </figure>
           <p>
             However, internet facing end users use their mobile phones, laptops, tablets and desktops and use the HTTP/S protocol. 
-            As we saw earlier, the choice here is to leverage SSE and receive a continuous stream of data without any additional effort from the end user. There is a clear mismatch between Kafka and the end-user's protocol of consuming streams of data.
+            As we saw earlier, the choice here is to leverage SSE and receive a continuous stream of data without any additional effort from the end user. There is a <strong>clear mismatch</strong> between Kafka and the end-user's protocol of consuming streams of data.
           </p>
           <h3 id="section-5-2">5.2 Using an API Proxy as Middleware</h3>
           <p>
@@ -1185,16 +1185,16 @@
 
           <ol>
           <li>
-            Clients, seen here in the yellow area, connect to Fjord via a load balancer.
+            Clients, seen here in the yellow area, connect to Fjord via a <strong>load balancer</strong>.
           </li>
           <li>
-            The load balancer connects each client to the most available server. These servers are in ECS and managed by Fargate, and automatically scale to accommodate more or less traffic.
+            The load balancer connects each client to the most available <strong>server</strong>. These servers are in ECS and managed by Fargate, and automatically scale to accommodate more or less traffic.
           </li>
           <li>
-            On the other end of the process, consumers are receiving data from the business user’s Kafka cluster. This traffic is routed through a NAT Gateway for added security, so that only the responses to requests from the consumers can come into the system.
+            On the other end of the process, <strong>consumers</strong> are receiving data from the business user’s Kafka cluster. This traffic is routed through a <strong>NAT Gateway</strong> for added security, so that only the responses to requests from the consumers can come into the system.
           </li>
           <li>
-            Finally, sitting in between the servers and the consumers is the Redis pub-sub server. This allows servers to automatically subscribe to all the content being published by all the consumers, and decouples their interaction.
+            Finally, sitting in between the servers and the consumers is the <strong>Redis pub-sub</strong> server. This allows servers to automatically subscribe to all the content being published by all the consumers, and decouples their interaction.
           </li>
           </ol>
           <p>
