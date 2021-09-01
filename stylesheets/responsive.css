@@ -68,8 +68,8 @@
   }
 
   #header nav a.selected {
-    border-bottom-color: var(--ekko-teal);
-    color: var(--ekko-blue);
+    border-bottom-color: var(--fjord-blue);
+    color: var(--fjord-blue);
   }
 
   #mobile-menu,
