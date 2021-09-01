@@ -933,34 +933,37 @@
           <!-- Section 7 -->
           <h2 id="section-7" class="h2">7. Building Fjord</h2>
           <h3 id="section-7-1">7.1 Overview of Triangular Pattern</h3>
+
+          <p>Let’s first look at a high-level view of how an organization like SuperEats would integrate Fjord into their infrastructure.</p>
+          
           <figure>
             <img src="assets/media/gifs/triangular_pattern.gif" class="case-study-image" />
             <!-- <figcaption>WebSockets</figcaption> -->
           </figure>
-          <p>Let’s first look at a high-level view of how an organization like SuperEats would integrate Fjord into their infrastructure.</p>
-          
-          [insert slide 35 graphic]
 
           <p>
             First, SuperEats drivers, customers, and any restaurants working with SuperEats would all connect to the SuperEats web servers on a mobile app or a browser via HTTP/S (e.g., to SuperEats.com).
           </p>
 
           <figure>
-            <img src="assets/media/gifs/end_users_superEats.gif" class="case-study-image" />
+            <img src="assets/media/gifs/end_users_supereats.gif" class="case-study-image" />
           </figure>
 
           <p>
             These servers would deliver, via either a mobile app or a browser, a page that initiates an SSE connection with (i.e. receives push updates from) the Fjord cluster deployed on SuperEats’ AWS account.
           </p>
 
-          [insert slide 36 graphic]
+          <figure>
+            <img src="assets/media/gifs/supereats_responds_sse.gif" class="case-study-image" />
+            <!-- <figcaption>WebSockets</figcaption> -->
+          </figure>
 
           <p>
             Fjord, in turn, would pull records from SuperEats’ Kafka cluster, and deliver them to connected clients who are interested in particular API topics.
           </p>
 
           <figure>
-            <img src="assets/media/gifs/supereats_responds.gif" class="case-study-image" />
+            <img src="assets/media/gifs/pull_and_deliver.gif" class="case-study-image" />
             <!-- <figcaption>WebSockets</figcaption> -->
           </figure>
 
