@@ -1131,7 +1131,10 @@
 
           <h4>7.3.7 SNS v.s. Redis</h4>
 
-          [insert slide 60 graphic - comparison chart]
+          <figure>
+            <img src="assets/media/images/sns vs redis.png" class="case-study-image" />
+            <!-- <figcaption>Middleware in between consumer and server</figcaption> -->
+          </figure>
 
           <p>
             One option was to use a publish subscribe model with an AWS messaging service, such as Simple Notification Service (SNS). SNS is a fully managed, publish subscribe messaging service that provides asynchronous message delivery from publishers to subscribers. While SNS is usually used to send data from a microservice to an end user via a text message or an email, it can also be placed between microservices to decouple their communication. SNS can fan out messages to multiple subscribers, which matched with our desire to get the records from one consumer to multiple instances of the server.
