@@ -778,6 +778,9 @@
           <p>
             Finally, the broker does not have to delete events. While traditional EDA technologies use a queue-based structure, where events are deleted after they’re consumed, event streaming platforms use a log-based structure to durably store events.
           </p>
+          <figure>
+            <img src="assets/media/gifs/kafka.gif" class="case-study-image" />
+          </figure>
           <p>
             With event streaming, newly added consumers can not only pick up newly received events, but they can also start to stream records from the very beginning of the log’s creation. This is, of course, only possible because events are not deleted after they are read.
           </p>
@@ -792,10 +795,6 @@
             In other words, increasing either the pace of events that are entering the system, or the number of consumers reading from the 
             broker, has a much less noticeable impact on the additional work the broker needs to do.
           </p>
-          <figure>
-            <img src="assets/media/gifs/kafka.gif" class="case-study-image" />
-            <!-- <figcaption>Event Streaming</figcaption> -->
-          </figure>
           <p>
             This finally leads us to our next point, the gold standard in event-streaming platforms: Apache Kafka.
           </p>
