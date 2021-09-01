@@ -237,40 +237,6 @@ body {
   display: none;
 }
 
-/* Photo courtesy of Davide Cantelli, Unsplash 
-
-#intro div.h-full {
-  background-image: url(../assets/logo/fjord-photo.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  
-  padding: 8rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-#intro .opaque {
-  padding: 2rem;
-  backdrop-filter: contrast(.9);
-  margin-bottom: 3em;
-}
-
-#intro h2 {
-  color: var(--gray-800);
-  font-size: 4vw;  
-}
-
-#intro h3 {
-  color: var(--gray-800);
-  font-size: 1.7vw;
-  opacity: .70;
-  font-style: italic;
-  backdrop-filter: blur(3px);
-} 
-*/
-
 
 /* TOC */
 #toc {
@@ -363,8 +329,8 @@ body {
 
 /* Case Study */
 #case-study-content {
-  /* border-bottom: 1px solid var(--gray-200);
-  border-top: 1px solid var(--gray-200); */
+  border-bottom: 5px solid var(--gray-200);
+  border-top: 5px solid var(--gray-200);
 }
 
 #case-study-content img {
@@ -400,8 +366,6 @@ body {
   margin-top: 3rem;
 }
 
-
-
 .prose a {
   color: #4c74b9;
   text-decoration: underline !important;
@@ -419,6 +383,7 @@ body {
 
 .prose blockquote {
   border-left: 0.25rem solid var(--gray-200);
+  font-size: 2.5rem;
 }
 
 .prose em {
@@ -575,6 +540,16 @@ body {
 }
 
 /* start-here */
+#start-here img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+#start-here video {
+  max-width: 90%;
+  max-height: 90%;
+}
+
 #start-here > div {
   display: flex;
   flex-direction: column;
@@ -681,10 +656,6 @@ body {
   display: none;
 }
 
-#start-here video {
-  max-width: 100%;
-}
-
 li {
   color: #334252;
 }
@@ -693,4 +664,3 @@ li {
   color: #334252;
   text-align: center;
 }
-

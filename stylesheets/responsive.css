@@ -68,8 +68,8 @@
   }
 
   #header nav a.selected {
-    border-bottom-color: var(--fjord-blue);
-    color: var(--fjord-blue);
+    border-bottom-color: var(--ekko-teal);
+    color: var(--ekko-blue);
   }
 
   #mobile-menu,
@@ -99,7 +99,6 @@
   }
 
   /* Case Study */
-
   :root {
     --toc-width: 250px;
   }
