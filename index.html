@@ -1001,8 +1001,10 @@
           <h3 id="section-7-3">7.3 The Evolution of Fjord</h3>
           <p>
             Fjord’s primary components are the server that maintains persistent SSE connections with clients, and the consumer that pulls data from Kafka and moves it to the server.
-            [diagram of single consumer making post request to server]
           </p>
+          <figure>
+            <img src="assets/media/gifs/decoupling 1.gif" class="case-study-image" />
+          </figure>
           <h4>7.3.1 Setting up a real-time streaming server</h4>
           <p>
             Our first step was to build a server that could stream content in real-time to connected clients. To do this, we experimented with SSE and WebSockets, before settling on SSE for our particular use case. After configuring the server, we moved on to extracting data from Kafka.
@@ -1011,14 +1013,18 @@
           <h4>7.3.2 Learning and Testing Kafka</h4>
           <p>
             Our next step was to simulate a business’s Kafka cluster itself, so that we could create a consumer that would be able to pull data from the cluster. We assembled a cluster with three brokers, first locally and then remotely, using a virtual private server (VPS).
-            [KafkaJS logo]
           </p>
+          <figure>
+            <img src="assets/media/images/kafkajs.png" class="case-study-image" />
+          </figure>
           <p>
             Because we planned to work with Node JS, we used a NodeJS client library called KafkaJS. KafkaJS is widely used, well tested, and has an active online and Slack community. This client library also allowed us to start with some default configurations for the consumer and adjust them as needed, and simulate records being produced into the cluster.</p>
           <h4>7.3.3 Accessing a Secure Kafka Cluster</h4>
           <p>
-            Kafka is not secure by default, and it can durably store sensitive data. We knew we needed to implement some security measures for the cluster. We enabled a firewall for the VPS and whitelisted the producer and consumer so it could still reach the remote Kafka broker.
-            [diagram of firewall around Kafka]</p>
+            Kafka is not secure by default, and it can durably store sensitive data. We knew we needed to implement some security measures for the cluster. We enabled a firewall for the VPS and whitelisted the producer and consumer so it could still reach the remote Kafka broker.</p>
+            <figure>
+              <img src="assets/media/images/secureKafka.png" class="case-study-image" />
+            </figure>
           <p>
             Additionally, we implemented SASL authentication for all Kafka clients, meaning producers and consumers would need to provide a username and password to the broker before interacting with the cluster.
           </p>
@@ -1032,9 +1038,10 @@
           </p>
           <p>
             Using JWTs, a private key is used by the server to generate valid public keys and then verify that a given public key (i.e. a token) passed back to the server from the client is valid.
-            [JWT diagram from google images]
-
           </p>
+          <figure>
+            <img src="assets/media/images/jwtDiagram.png" class="case-study-image" />
+          </figure>
           <p>
             Fjord leaves the option of using JWTs up to the business user, via some configuration settings.
           </p>
