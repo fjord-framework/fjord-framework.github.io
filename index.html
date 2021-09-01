@@ -770,13 +770,13 @@
           </figure>
 
           <p>
-            The main paradigm shift and key differentiating factor behind event streaming platforms is that the broker actually does less work than it does in the traditional EDA model.
+            The main paradigm shift and key differentiating factor behind event streaming platforms is that the broker actually does <em>less</em> work than it does in the traditional EDA model.
           </p>
           <p>
             Instead of the broker pushing events to all consumers, each consumer is responsible for pulling each record from the broker. The broker similarly does not have to worry about keeping track of the offset of each consumer, since each consumer handles their own offset themselves.
           </p>
           <p>
-            Finally, the broker does not have to delete events. While traditional EDA technologies use a queue-based structure, where events are deleted after they’re consumed, event streaming platforms use a log-based structure to durably store events.
+            Finally, the broker does not have to delete events. While traditional EDA technologies use a <strong>queue-based</strong> structure, where events are deleted after they’re consumed, event streaming platforms use a <strong>log-based</strong> structure to durably store events.
           </p>
           <figure>
             <img src="assets/media/gifs/kafka.gif" class="case-study-image" />
@@ -786,10 +786,10 @@
           </p>
           <p>
             In order to ensure a scalable event streaming platform, where we place more business logic becomes significant. With traditional EDA technologies, the broker holds the bulk of the integration logic. Consumers just receive whatever is sent to them by the broker. 
-            This sets up the “Smart Broker, Dumb Consumer” approach.
+            This sets up the <em>“Smart Broker, Dumb Consumer”</em> approach.
           </p>
           <p>
-            In contrast, event streaming platforms opt for the “Dumb Broker, Smart Consumer” approach, placing more integration logic on each consumer instead. This enables a high volume and velocity of events, because there’s a significantly lower relationship between the number of events and consumers on the one hand, and the amount of work the broker needs to do on the other.
+            In contrast, event streaming platforms opt for the <em>“Dumb Broker, Smart Consumer”</em> approach, placing more integration logic on each consumer instead. This enables a high volume and velocity of events, because there’s a significantly lower relationship between the number of events and consumers on the one hand, and the amount of work the broker needs to do on the other.
           </p>
           <p>
             In other words, increasing either the pace of events that are entering the system, or the number of consumers reading from the 
@@ -802,6 +802,9 @@
           <p>
             If data is the lifeblood of an organization, then Apache Kafka is like the organization’s circulatory system. Kafka offers a powerful, scalable, efficient, and redundant infrastructure that allows your distributed services to communicate with each other in real-time.
           </p>
+          <figure>
+            <img src="assets/media/images/kafka-logo.png" class="case-study-image" />
+          </figure>
           <p>
             The technology was created at LinkedIn out of a need to track vast numbers of site events like page views and user actions, as well as to aggregate large quantities of logs from disparate sources within its distributed architecture. It later became an open source project of the Apache Foundation in 2011.
           </p>
@@ -998,10 +1001,10 @@
           <h3 id="section-7-2">7.2 Design Goals</h3>
           <p>We designed Fjord with four main goals in mind:</p>
           <ul>
-            <li>API Proxy: open Kafka topics to client-side streaming,</li>
-            <li>Security: enable Fjord business users to restrict access to their Kafka stream through security parameters,</li>
-            <li>Scalability: create a scalable platform-as-a-service (PaaS) infrastructure, and</li>
-            <li>Ease of deployment: make deploying Fjord super simple.</li>
+            <li><strong>API Proxy</strong>: open Kafka topics to client-side streaming,</li>
+            <li><strong>Security</strong>: enable Fjord business users to restrict access to their Kafka stream through security parameters,</li>
+            <li><strong>Scalability</strong>: create a scalable platform-as-a-service (PaaS) infrastructure, and</li>
+            <li><strong>Ease of deployment</strong>: make deploying Fjord super simple.</li>
           </ul>
           <p>
             In the next section, we’ll walk through the evolution of how we built Fjord to achieve these design goals, and address some of the key decisions we made along the way.
