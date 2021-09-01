@@ -333,6 +333,12 @@ body {
   border-top: 5px solid var(--gray-200);
 }
 
+.cli {
+  background-color: var(--fjord-blue);
+  width: 600px;
+  padding: 10px;
+}
+
 #case-study-content img {
   max-width: 100%;
 }
