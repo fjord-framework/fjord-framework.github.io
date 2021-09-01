@@ -1201,8 +1201,7 @@
             <img src="assets/media/images/fjordSetup.png" class="case-study-image" />
           </figure>
           <p>
-            In your directory, use the command `fjord setup`. This will generate a `FjordSettings.json` file and a
-             `cdk.out` file.
+            In your directory, use the command `fjord setup`. This will generate a `FjordSettings.json` file:
           </p>
           <figure>
             <img src="assets/media/images/FjordSettings.png" class="case-study-image" />
@@ -1336,12 +1335,15 @@
             We eventually came across Gatling, which actually had some good docs for testing SSE. Gatling is built on top of Java and Scala, which did entail learning and working with some Scala. We used Gatling to test what load an individual server could handle.
           </p>
           <figure>
-            <img src="assets/media/images/eightthousandconnections.png" class="case-study-image" />
+            <img src="assets/media/images/8000_connections.png" class="case-study-image" />
             <!-- <figcaption>Heartbeat to all clients</figcaption> -->
           </figure>
           <p>
             We found that before scaling out, a single server can hold SSE connections for up to 8,500 simultaneous requests. 
-            Fjord servers use the minimal CPU and memory offered by AWS as a cost savings measure for the business user, to ensure that spend is limited to how much use the system is seeing, and no more than that. Rather than trying to vertically scale an individual Fjord server that would maintain a larger number of SSE connections, we simply had the AWS autoscaling policy spin up or down new instances as needed.  
+            Fjord servers use the minimal CPU and memory offered by AWS as a cost savings measure for the business user, to ensure that spend is limited to how much use the system is seeing, and no more than that. 
+          </p>
+          <p>
+            Rather than trying to vertically scale an individual Fjord server that would maintain a larger number of SSE connections, we simply had the AWS autoscaling policy spin up or down new instances as needed.  
           </p>
           <!-- Section 10 -->
           <h2 id="section-10" class="h2">10. Future Work</h2>
