@@ -334,14 +334,13 @@ body {
   border-top: 5px solid var(--gray-200);
 }
 
-.cli {
-  /* background-color: var(--fjord-blue); */
-  /* width: 600px; */
+/* .cli {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 90%;
-}
+  max-height: 1080px;
+  width: auto;
+} */
 
 #case-study-content img {
   max-width: 100%;
