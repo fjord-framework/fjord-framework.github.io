@@ -1157,7 +1157,10 @@
             Our final design goal was to make Fjord simple to deploy. To facilitate the ECS cluster that the server and consumer live in as well as the Elasticache cluster, more than 40 AWS resources are required, including a virtual private cloud (VPC), security groups, subnets, NAT gateways, an application load balancer, and many others. 
           </p>
 
-          [insert screenshot of AWS Console]
+          <figure>
+            <img src="assets/media/images/aws_console.png" class="case-study-image" />
+            <!-- <figcaption>Middleware in between consumer and server</figcaption> -->
+          </figure>
 
           <p>
             It’s possible to manually deploy each resource on the AWS Console, which is the web UI developers can interact with by clicking and specifying configurations. However, this is error-prone and not a repeatable, feasible way to deploy infrastructure on AWS, especially when one of the key design goals of Fjord is to make deployment simple. 
