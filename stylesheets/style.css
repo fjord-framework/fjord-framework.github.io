@@ -335,9 +335,12 @@ body {
 }
 
 .cli {
-  background-color: var(--fjord-blue);
-  width: 600px;
-  padding: 10px;
+  /* background-color: var(--fjord-blue); */
+  /* width: 600px; */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
 }
 
 #case-study-content img {
