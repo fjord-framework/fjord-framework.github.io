@@ -37,17 +37,17 @@ bg-dark-blue@font-face {
 html,
 body {
   box-sizing: border-box;
-  font-family: OpenSans, system-ui, -apple-system, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: OpenSans, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   height: 100%;
   background-color: white;
 }
 
 .code-snippet {
-  background-color:  rgba(0, 189, 170, 0.2);
+  background-color: rgba(0, 189, 170, 0.2);
   padding: 4px;
   font-weight: bold;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
 }
 
 *,
@@ -81,7 +81,7 @@ body {
 }
 
 .bg-yellow {
-  background-color: var(--fjord-yellow)
+  background-color: var(--fjord-yellow);
 }
 
 .bg-teal {
@@ -127,7 +127,6 @@ body {
   height: 4rem;
   visibility: hidden;
   pointer-events: none;
-  
 }
 
 /* Header */
@@ -234,10 +233,9 @@ body {
   display: block;
 }
 
-.mobile-menu-open #mobile-open { 
+.mobile-menu-open #mobile-open {
   display: none;
 }
-
 
 /* TOC */
 #toc {
@@ -327,7 +325,6 @@ body {
   display: block;
 }
 
-
 /* Case Study */
 #case-study-content {
   border-bottom: 5px solid var(--gray-200);
@@ -415,7 +412,7 @@ img.icon {
 }
 
 .prose p {
-  color: #4A5568;  /* sophie changes */
+  color: #4a5568; /* sophie changes */
 }
 
 .prose a:hover {
@@ -450,7 +447,6 @@ img.icon {
 .prose code:after {
   content: "";
 }
-
 
 /* Our Team */
 #our-team > div {
@@ -554,7 +550,6 @@ img.icon {
   width: 10rem;
 }
 
-
 /* Youtube */
 #presentation div {
   padding: 4rem 0;
@@ -614,7 +609,6 @@ img.icon {
 
 #start-here div.static-logo-light-blue {
   display: none;
-
 }
 
 #start-here div.static-logo-blue {
@@ -709,4 +703,8 @@ li {
 .prose figure figcaption {
   color: #334252;
   text-align: center;
+}
+
+ul.chart li::before {
+  background-color: white;
 }
