@@ -346,23 +346,36 @@ body {
   max-width: 100%;
 }
 
-ul.chart {
-  list-style-type: none !important;
-  margin: 0;
-  padding: 0;
-}
-
-ul.chart > li {
+/* tr {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+td {
+  margin: 0;
+  padding: 0 !important;
+} */
+
+div ul.chart {
+  list-style: none !important;
+  list-style-type: none !important;
+  list-style-image: none !important;
+}
+
+div > ul.chart > li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 img.icon {
   width: 150px;
   position: relative;
   margin: 0;
-  padding: 0;
+  padding: 10px 0;
 }
 
 #case-study-content video {
