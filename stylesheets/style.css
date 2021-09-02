@@ -573,6 +573,10 @@ img.icon {
   max-height: 90%;
 }
 
+#start-here img.cli {
+  width: auto !important;
+}
+
 #start-here video {
   max-width: 90%;
   max-height: 90%;
