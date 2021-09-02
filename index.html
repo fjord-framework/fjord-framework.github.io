@@ -866,48 +866,29 @@
           </p>
           <h3 id="section-5-3">5.3 Additional Benefits of an API Proxy</h3>
           <p>
-            Not only does the API Proxy make client-side streaming from Kafka possible, but it also provides some additional benefits.
+            An API Proxy not only makes client-side streaming from Kafka possible, but it also provides some additional benefits.
           </p>
           
           <div>
             <ul class="chart">
               <li>
                 <img src="assets/media/images/security_layer.png" class="icon" />
-                When consumers are external to the system and are connected via the internet, there needs to be additional security in place to closely monitor for malicious access to the internal system.
+                Letting end users connect directly to Kafka would present some significant security risks. Using a proxy provides an additional layer of security in between end users and your Kafka cluster.
               </li>
               <li>
                 <img src="assets/media/images/external_fanout.png" class="icon" />
-                An API proxy allows thousands of end users to receive Kafka streams over HTTP. Using a separate proxy also allows you to dynamically scale the server to respond to external user traffic.
+                An API proxy allows you to fanout Kafka records to thousands of end users over HTTP, significantly reducing the number of direct connections to your Kafka cluster. Using a proxy also allows you to dynamically scale the servers up and down to respond to external user traffic.
               </li>
               <li>
                 <img src="assets/media/images/customizable_api.png" class="icon" />
-                Using an API proxy also allows you to customize and group the Kafka topics you want to expose into different configurations of API end-points.
+                Having an additional layer between Kafka and end users enables more customizations, so you can group various Kafka topics from different Kafka clusters into any number of API end-points with any custom names you want.
               </li>
               <li>
                 <img src="assets/media/images/paas.png" class="icon" />
-                This additional messaging layer allows you to offload the resource-intensive task of real-time streaming, and all the infrastructure involved to an API proxy, so you can focus on value creation activities that are central for your business.
+                This additional messaging layer allows you to offload the resource-intensive task of real-time streaming to an external infrastructure, so you can focus on value creation activities that are central to your business.
               </li>
             </ul>
           </div>
-
-          <!-- <table>
-            <tr>
-              <td><img src="assets/media/images/security_layer.png" class="icon" /></td>
-              <td>When consumers are external to the system and are connected via the internet, there needs to be additional security in place to closely monitor for malicious access to the internal system.</td>
-            </tr>
-            <tr>
-              <td><img src="assets/media/images/external_fanout.png" class="icon" /></td>
-              <td>An API proxy allows thousands of end users to receive Kafka streams over HTTP. Using a separate proxy also allows you to dynamically scale the server to respond to external user traffic.</td>
-            </tr>
-            <tr>
-              <td><img src="assets/media/images/customizable_api.png" class="icon" /></td>
-              <td>Using an API proxy also allows you to customize and group the Kafka topics you want to expose into different configurations of API end-points.</td>
-            </tr>
-            <tr>
-              <td><img src="assets/media/images/paas.png" class="icon" /></td>
-              <td>This additional messaging layer allows you to offload the resource-intensive task of real-time streaming, and all the infrastructure involved to an API proxy, so you can focus on value creation activities that are central for your business.</td>
-            </tr>
-          </table> -->
           
           <p>
             What are some existing solutions for this API proxy? Let’s look at that next.
