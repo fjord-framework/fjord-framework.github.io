@@ -346,13 +346,13 @@ body {
   max-width: 100%;
 }
 
-.chart > ul {
+ul.chart {
   list-style-type: none !important;
   margin: 0;
   padding: 0;
 }
 
-.chart > ul > li {
+ul.chart > li {
   display: flex;
   flex-direction: row;
   align-items: center;
