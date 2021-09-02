@@ -346,6 +346,25 @@ body {
   max-width: 100%;
 }
 
+.chart > ul {
+  list-style-type: none !important;
+  margin: 0;
+  padding: 0;
+}
+
+.chart > ul > li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+img.icon {
+  width: 150px;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
 #case-study-content video {
   max-width: 100%;
 }

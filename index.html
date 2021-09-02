@@ -862,34 +862,36 @@
             <img src="assets/media/gifs/api proxy.gif" class="case-study-image" />
           </figure>
           <p>
-            By positioning an API proxy between Kafka and the web, the API proxy can pull data from Kafka over Kafka’s binary protocol, and can push that data to connected devices over the internet via the HTTP protocol.
+            By positioning an API proxy between Kafka and the web, the API proxy can pull data from Kafka over Kafka’s binary protocol, and can push that data to connected devices in real-time via SSE, which is delivered over the HTTP protocol.
           </p>
           <h3 id="section-5-3">5.3 Additional Benefits of an API Proxy</h3>
           <p>
             Not only does the API Proxy make client-side streaming from Kafka possible, but it also provides some additional benefits.
           </p>
+
           [Convert this to a table, with left column being icons, and right column being matching content]
-          <p>
-            Additional Layer of security 
-            When consumers are internal to the system, security isn’t usually a concern since it is a controlled environment. However, when consumers are external to the system and are connected via the internet, there needs to be additional security in place to closely monitor for malicious access to the internal system.
-          </p>
-          <p>
-            Using a proxy serves as this additional layer of security.
-          </p>
-          <h4>5.3.2 Outsourcing the Fanout mechanism</h4>
-          <p>
-            Handling thousands or millions of internet users is a resource intensive endeavour. Making each client an independent Kafka
-             consumer is possible, but it would be highly inadvisable for not only obvious security reasons, but also for the unnecessary 
-             load it would add to your Kafka cluster.
-          </p>
-          <p>
-            Using a proxy enables the web messaging tasks to be offloaded to another messaging layer entirely. This offers a more reliable 
-            and scalable solution.
-          </p>
-          <p>
-            Positioning an API proxy between Kafka and end users would allow this middleware to receive Kafka records using Kafka’s 
-            binary protocol, and then push that data to all connected devices in real-time via SSE, which is delivered over the HTTP protocol.
-          </p>
+          
+          <div class="chart">
+            <ul>
+              <li>
+                <img src="assets/media/images/security_layer.png" class="icon" />
+                When consumers are external to the system and are connected via the internet, there needs to be additional security in place to closely monitor for malicious access to the internal system.
+              </li>
+              <li>
+                <img src="assets/media/images/external_fanout.png" class="icon" />
+                An API proxy allows thousands of end users to receive Kafka streams over HTTP. Using a separate proxy also allows you to dynamically scale the server to respond to external user traffic.
+              </li>
+              <li>
+                <img src="assets/media/images/customizable_api.png" class="icon" />
+                Using an API proxy also allows you to customize and group the Kafka topics you want to expose into different configurations of API end-points.
+              </li>
+              <li>
+                <img src="assets/media/images/paas.png" class="icon" />
+                This additional messaging layer allows you to offload the resource-intensive task of real-time streaming, and all the infrastructure involved to an API proxy, so you can focus on value creation activities that are central for your business.
+              </li>
+            </ul>
+          </div>
+          
           <p>
             What are some existing solutions for this API proxy? Let’s look at that next.
           </p>
